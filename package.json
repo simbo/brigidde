@@ -6,6 +6,9 @@
   "private": true,
   "license": "MIT",
   "main": "src/index.ts",
+  "engines": {
+    "node": "8.9.x"
+  },
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "dev": "nodemon --exec \"ts-node\" ./src/index.ts"
