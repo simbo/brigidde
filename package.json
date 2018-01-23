@@ -1,0 +1,37 @@
+{
+  "name": "brigidde",
+  "description": "A chatbot server",
+  "author": "Simon Lepel <simbo@simbo.de>",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "dev": "nodemon --exec \"ts-node\" ./src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "hapi": "^17.2.0",
+    "joi": "^13.1.0",
+    "jsonwebtoken": "^8.1.0",
+    "node-fetch": "^1.7.3",
+    "node-wit": "^4.3.0",
+    "rivescript": "^1.18.0",
+    "uuid": "^3.1.0",
+    "ws": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.2",
+    "@types/joi": "^13.0.4",
+    "@types/jsonwebtoken": "^7.2.5",
+    "@types/node": "^9.3.0",
+    "@types/node-fetch": "^1.6.7",
+    "@types/node-wit": "^4.2.2",
+    "@types/uuid": "^3.4.3",
+    "@types/ws": "^3.2.1",
+    "nodemon": "^1.14.10",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2"
+  }
+}

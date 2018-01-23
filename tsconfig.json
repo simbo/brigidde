@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": false,
+    "inlineSourceMap": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "outDir": "dist",
+    "pretty": true
+  },
+  "include": [
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
