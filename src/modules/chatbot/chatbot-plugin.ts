@@ -14,7 +14,7 @@ export const chatbotPlugin = {
     server.route(chatbotRoutes);
 
     server.wss.on('/', 'message', (content, ws) => {
-      const jobId = uuid()
+      const jobId = uuid();
       const responseMinDuration = randomInt(200, 600);
       const responseStart = Date.now();
       const respond = (cb: () => void): void => {
