@@ -4,8 +4,8 @@ import * as URL from 'url';
 import * as Hapi from 'hapi';
 import * as Websocket from 'ws';
 
-import { verifyToken, decodeToken } from '../auth/token';
-import { TokenData } from '../auth/token-data.interface';
+import { verifyToken, decodeToken } from './../auth/token/token-helpers';
+import { TokenData } from './../auth/token/token-data.interface';
 import { WebsocketMessage } from './websocket-message.interface';
 import { WebsocketMessageHandler } from './websocket-message-handler.interface';
 import { WebsocketTools } from './websocket-tools';
