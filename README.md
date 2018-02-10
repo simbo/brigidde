@@ -1,7 +1,7 @@
 brigidde
 ========
 
-> Something with angular client and hapi server.
+> Playground project. Something with angular client and hapi server.
 
 ---
 
@@ -10,6 +10,7 @@ brigidde
 - [Features [WIP]](#features-wip)
   - [Server](#server)
   - [Client](#client)
+  - [General](#general)
 - [Development](#development)
   - [Prerequisites:](#prerequisites)
   - [Usage](#usage)
@@ -25,14 +26,13 @@ brigidde
 ### Server
 
   - [x] oauth strategy, signup using github or twitter
-      - [ ] client/ui implementation
+      - store user profiles with local uuid and respective auth info
   - [x] jwt auth strategy
   - [x] websocket support
   - [x] couchdb integration using [nano](https://github.com/apache/couchdb-nano)
       - [x] automatic design updates
       - [x] generic database repository pattern
   - [x] redis integration
-      - [ ] store user/websocket relations
   - [x] static file serving using [inert](https://github.com/hapijs/inert)
   - [x] view management using [vision](https://github.com/hapijs/vision)
         with [pug](https://github.com/pugjs/pug) templates
@@ -42,8 +42,6 @@ brigidde
   - [x] chatbot service
       - [x] [rivescript](https://www.rivescript.com/) integration 
       - [x] [wit.ai](https://wit.ai/) integration
-      - [ ] persist conversations
-      - [ ] context/user related conversations
   - [ ] interactive debugging console using [tv](https://github.com/hapijs/tv)
   - [ ] generated api documentation using [lout](https://github.com/hapijs/lout)
   - [ ] handle uncaught exceptions and cleanup afterwards using
@@ -58,9 +56,18 @@ brigidde
   - [x] convenient and state-of-the-art build system using [webpack](https://webpack.js.org/)
 
 
+### General
+
+  - [ ] store user/websocket relations in redis
+  - [ ] persist chatbot conversations in couchdb
+  - [ ] context/user related conversations for chatbot
+  - [ ] client/ui implementation for signup/auth
+
+
 ## Development
 
 **Requirements:** `docker` with `docker-compose`
+
 
 ### Prerequisites:
 
