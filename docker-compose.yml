@@ -1,6 +1,21 @@
 version: "2.1"
 
+volumes:
+  couchdb_data:
+  couchdb_conf:
 services:
+
+  couchdb:
+    container_name: brigidde_couch
+    image: couchdb:2
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+      - couchdb_conf:/opt/couchdb/etc
+    environment:
+      COUCHDB_USER: ${APP_COUCHDB_USER}
+      COUCHDB_PASSWORD: ${APP_COUCHDB_PASSWORD}
+    ports:
+      - 5984:5984
 
   app:
     container_name: brigidde_app
