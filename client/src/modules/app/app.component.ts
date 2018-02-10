@@ -16,7 +16,6 @@ export class AppComponent {
   constructor(
     private socketService: SocketService
   ) {
-    this.socketService.connect();
   }
 
 }
