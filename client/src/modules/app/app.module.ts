@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 
 import { ServerModule } from './../server/server.module';
+import { TerminalModule } from './../terminal/terminal.module';
 import { StatusBarModule } from '../status-bar/status-bar.module';
 import { MessageBusService } from './message-bus/message-bus.service';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { ScreenComponent } from './screen/screen.component';
     BrowserModule,
     HttpModule,
     ServerModule,
+    TerminalModule,
     StatusBarModule
   ],
   providers: [

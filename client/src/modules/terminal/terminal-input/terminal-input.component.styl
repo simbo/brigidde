@@ -1,0 +1,36 @@
+@require 'global-vars'
+@require './../terminal.component.vars'
+
+.terminal-input
+  position: relative
+
+  &__prompt
+    position: absolute
+    top: 0
+    left: $terminal.window.padding.x
+    padding-right: $terminal.prompt.spacing
+    pointer-events: none
+    line-height: $terminal.lineHeight
+    white-space: nowrap
+
+    &:empty::after
+      content: $terminal.prompt.content
+      color: $terminal.textColors.inputPrompt
+
+  &__textarea
+    display: block
+    width: 100%
+    height: (unit($terminal.lineHeight, 'rem') + $terminal.message.spacing + $terminal.window.padding.y)
+    padding: 0 $terminal.message.x $terminal.window.padding.y
+    border-radius: 0
+    border: none
+    background: transparent
+    font-size: 1rem
+    font-family: $fontFamily.monospace
+    line-height: $terminal.lineHeight
+    text-indent: 1em
+    color: $terminal.textColors.input
+    resize: none
+
+    &:focus
+      outline: none

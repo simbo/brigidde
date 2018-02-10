@@ -1,0 +1,13 @@
+.terminal
+
+  .terminal__window
+
+    .terminal__message-list(*ngIf = "log")
+
+      terminal-message(
+        *ngFor = "let message of log",
+        [message] = "message"
+      )
+
+    .terminal__message-input
+      terminal-input((message) = "onMessageInput($event)")
