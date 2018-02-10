@@ -30,23 +30,39 @@ const config = {
 
   output: {
     path: paths.dist(),
-    filename: `[name]${ IS_PRODUCTION ? '.[chunkhash]' : '' }.js`,
-    sourceMapFilename: `[name]${ IS_PRODUCTION ? '.[chunkhash]' : '' }.js.map`,
-    chunkFilename: `[id]${ IS_PRODUCTION ? '.[chunkhash]' : '' }.chunk.js`
+    filename: `scripts/[name]${ IS_PRODUCTION ? '.[chunkhash]' : '' }.js`,
+    sourceMapFilename: `scripts/[name]${ IS_PRODUCTION ? '.[chunkhash]' : '' }.js.map`,
+    chunkFilename: `scripts/[id]${ IS_PRODUCTION ? '.[chunkhash]' : '' }.chunk.js`
   },
 
   devtool: IS_PRODUCTION ? 'source-map' : 'cheap-module-eval-source-map',
 
   watchOptions,
 
-  // devServer: {
-  //   host: '0.0.0.0',
-  //   port: 9000,
-  //   contentBase: paths.src(),
-  //   clientLogLevel: 'warning',
-  //   compress: true,
-  //   watchOptions
-  // },
+  devServer: {
+    host: '0.0.0.0',
+    port: 9000,
+    contentBase: paths.src(),
+    clientLogLevel: 'warning',
+    compress: true,
+    hot: true,
+    hotOnly: true,
+    proxy: [{
+      context: [
+        '/**',
+        '!/index.html',
+        '!/scripts/**',
+        '!/styles/**',
+        '!/assets/**'
+      ],
+      target: `${
+          process.env.APP_HTTP_SECURE === 'true' ? 'https' : 'http'
+        }://server:${
+          process.env.APP_HTTP_PORT
+        }`
+    }],
+    watchOptions
+  },
 
   module: {
     rules: [

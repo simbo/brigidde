@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --hide-modules --no-progress --bail",
+    "dev": "webpack-dev-server --color",
     "watch": "webpack --hide-modules --watch --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

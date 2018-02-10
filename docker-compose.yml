@@ -40,14 +40,20 @@ services:
     working_dir: /project/server
     ports:
       - 3000:3000
-    command: yarn start
+    command: yarn watch
+    tty: true
+    stdin_open: true
 
   client:
     container_name: brigidde_client
+    depends_on:
+      - server
     image: simbo/node:8-alpine
     volumes:
       - .:/project
     working_dir: /project/client
     ports:
       - 9000:9000
-    command: yarn build
+    command: yarn dev
+    tty: true
+    stdin_open: true
