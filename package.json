@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "dev": "nodemon --exec \"ts-node\" ./src/index.ts"
+    "dev": "nodemon --watch \"src/\" -e ts,js,json,pug --exec \"ts-node\" ./src/index.ts"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
