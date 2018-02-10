@@ -120,15 +120,15 @@ docker attach brigidde_client
 Use `ctrl-D,ctrl-Q` to detach from tty and keep the service running.  
 (Using `ctrl-C` will detach and stop the service.)
 
-For convenient package management using `yarn`, open a shell with client or
+For convenient package management using `yarn`, open a shell within client or
 server container:
 
 ``` sh
-# open shell with server container
-docker-compose run --rm server sh -l
+# open shell in server container
+docker-compose exec server sh -l
 
-# open shell with client container
-docker-compose run --rm client sh -l
+# open shell in client container
+docker-compose exec client sh -l
 ```
 
 For redis management, open a `redis-cli` shell using password from `.env`:
