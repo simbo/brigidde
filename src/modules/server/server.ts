@@ -1,8 +1,10 @@
 import * as Hapi from 'hapi';
+import * as Vision from 'vision';
 
 import { chatbotPlugin } from './../chatbot/chatbot-plugin';
 import { websocketPlugin } from './../websocket/websocket-plugin';
 import { authPlugin } from './../auth/auth-plugin';
+import { viewManager } from './view-manager';
 
 export async function startServer(): Promise<Hapi.Server> {
 
@@ -12,10 +14,13 @@ export async function startServer(): Promise<Hapi.Server> {
   });
 
   await server.register([
+    Vision,
     authPlugin,
     websocketPlugin,
     chatbotPlugin
   ]);
+
+  server.views(viewManager);
 
   await server.start();
 
