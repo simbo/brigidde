@@ -6,7 +6,7 @@ import { join, dirname } from 'path';
 import { config } from 'dotenv';
 
 config({
-  path: join(dirname(__dirname), '.env'),
+  path: join(dirname(dirname(__dirname)), '.env'),
   encoding: 'utf8'
 });
 

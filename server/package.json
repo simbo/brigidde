@@ -14,7 +14,7 @@
     "dev": "nodemon --watch \"src/\" -e ts,js,json,pug --exec \"ts-node\" ./src/index.ts"
   },
   "dependencies": {
-    "@octokit/rest": "^14.0.8",
+    "@octokit/rest": "^14.0.9",
     "accept": "^3.0.2",
     "bell": "makeomatic/bell#hapi17",
     "denodeify": "^1.2.1",
