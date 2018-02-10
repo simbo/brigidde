@@ -12,7 +12,8 @@ brigidde
   - [Client](#client)
   - [General](#general)
 - [Development](#development)
-  - [Prerequisites:](#prerequisites)
+  - [Requirements](#requirements)
+  - [Prerequisites](#prerequisites)
   - [Usage](#usage)
 
 <!-- /TOC -->
@@ -66,19 +67,22 @@ brigidde
 
 ## Development
 
-**Requirements:** `docker` with `docker-compose`
+### Requirements
+
+`docker` with `docker-compose`
 
 
-### Prerequisites:
+### Prerequisites
 
-Install server and client dependencies:  
+Install server and client dependencies:
 
 ``` sh
 docker-compose run --rm server yarn
 docker-compose run --rm client yarn
 ```
 
-Create an env file, add your api tokens and customize it according your needs:  
+Create an env file, add your api tokens and customize it according your needs:
+
 ``` sh
 cp .env-sample .env
 ```
