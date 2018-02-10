@@ -9,6 +9,7 @@ brigidde
 
 - [Features [WIP]](#features-wip)
   - [Server](#server)
+  - [Client](#client)
 - [Development](#development)
   - [Prerequisites:](#prerequisites)
   - [Usage](#usage)
@@ -17,7 +18,9 @@ brigidde
 
 ---
 
+
 ## Features [WIP]
+
 
 ### Server
 
@@ -47,6 +50,14 @@ brigidde
         [poop](https://github.com/hapijs/poop)
 
 
+### Client
+
+  - [x] spa client using latest [angular](https://angular.io/)
+  - [x] html templating using [pug](https://pugjs.org/)
+  - [x] css development using [stylus](http://stylus-lang.com/) and [postcss](http://postcss.org/)
+  - [x] convenient and state-of-the-art build system using [webpack](https://webpack.js.org/)
+
+
 ## Development
 
 **Requirements:** `docker` with `docker-compose`
@@ -74,18 +85,20 @@ You can manage the project using `docker-compose` as usual:
 docker-compose up -d
 ```
 
-More convenient for development is opening shells for client and server to run
-and observe watch tasks and manage dependencies:
+More convenient for development is opening separate container shells for client
+and server to run and observe watch tasks and manage dependencies:
+
+**Open server container shell (with couchdb and redis as dependencies):**
 
 ``` sh
-# open server container shell (with couchdb and redis as dependencies)
 docker-compose run --rm -p 3000:3000 server sh -l
 # within the container, start the server in watch mode
 yarn watch
 ```
 
+**Open client container shell:**
+
 ``` sh
-# open client container shell
 docker-compose run --rm client sh -l
 # within the container, start webpack in watch mode
 yarn watch
@@ -93,3 +106,6 @@ yarn watch
 
 With running services, you can open **[localhost:3000](http://localhost:3000)**
 in your host machine browser.
+
+If you have enabled webpack bundle analyzer open [localhost:9000](http://localhost:9000)
+for detailed bundle informations.
