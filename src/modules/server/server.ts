@@ -6,6 +6,7 @@ import { websocketPlugin } from './../websocket/websocket-plugin';
 import { reporterPlugin } from './../log/reporter-plugin';
 import { authPlugin } from './../auth/auth-plugin';
 import { viewManager } from './view-manager';
+import { onPreResponse } from './server-event-handlers';
 
 export async function startServer(): Promise<Hapi.Server> {
 
@@ -23,6 +24,8 @@ export async function startServer(): Promise<Hapi.Server> {
   ]);
 
   server.views(viewManager);
+
+  server.ext('onPreResponse', onPreResponse);
 
   await server.start();
 
