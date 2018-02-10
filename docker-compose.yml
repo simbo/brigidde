@@ -4,7 +4,6 @@ volumes:
   couchdb_data:
   couchdb_conf:
   redis_data:
-  client_dist:
 
 services:
 
@@ -31,11 +30,24 @@ services:
 
   server:
     container_name: brigidde_server
+    depends_on:
+      - couchdb
+      - redis
     image: simbo/node:8-alpine
     volumes:
-      - client_dist:/public
+      - ./client/dist:/public
       - .:/project
     working_dir: /project/server
     ports:
       - 3000:3000
     command: yarn start
+
+  client:
+    container_name: brigidde_client
+    image: simbo/node:8-alpine
+    volumes:
+      - .:/project
+    working_dir: /project/client
+    ports:
+      - 9000:9000
+    command: yarn build
