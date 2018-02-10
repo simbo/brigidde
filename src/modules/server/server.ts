@@ -1,4 +1,5 @@
 import * as Hapi from 'hapi';
+import * as Inert from 'inert';
 import * as Vision from 'vision';
 
 import { chatbotPlugin } from './../chatbot/chatbot-plugin';
@@ -7,6 +8,7 @@ import { databasePlugin } from './../database/database-plugin';
 import { reporterPlugin } from './../log/reporter-plugin';
 import { authPlugin } from './../auth/auth-plugin';
 import { viewManager } from './view-manager';
+import { routes } from './routes';
 import { onPreResponse } from './server-event-handlers';
 
 export async function startServer(): Promise<Hapi.Server> {
@@ -19,6 +21,7 @@ export async function startServer(): Promise<Hapi.Server> {
   await server.register([
     databasePlugin,
     reporterPlugin,
+    Inert,
     Vision,
     authPlugin,
     websocketPlugin,
@@ -26,6 +29,8 @@ export async function startServer(): Promise<Hapi.Server> {
   ]);
 
   server.views(viewManager);
+
+  server.route(routes);
 
   server.ext('onPreResponse', onPreResponse);
 

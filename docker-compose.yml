@@ -3,6 +3,8 @@ version: "2.1"
 volumes:
   couchdb_data:
   couchdb_conf:
+  client_dist:
+
 services:
 
   couchdb:
@@ -21,6 +23,7 @@ services:
     container_name: brigidde_app
     image: simbo/node:8-alpine
     volumes:
+      - client_dist:/public
       - .:/project
     working_dir: /project
     ports:
