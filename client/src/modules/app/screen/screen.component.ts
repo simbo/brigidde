@@ -40,10 +40,6 @@ export class ScreenComponent implements OnInit, OnDestroy {
     this.msgBus.push('request:focus:chat-input');
   }
 
-  private get contentHeight(): number {
-    return this.contentElement.offsetHeight;
-  }
-
   private onWindowResize(): void {
     if (this.windowResizeTimeout) {
       window.clearTimeout(this.windowResizeTimeout);
@@ -52,10 +48,12 @@ export class ScreenComponent implements OnInit, OnDestroy {
   }
 
   private scrollDown(): void {
-    const el: HTMLElement = this.elementRef.nativeElement;
-    const targetPosition = this.contentHeight - window.innerHeight;
-    if (el.scrollTop <= targetPosition) {
-      el.scrollTop = targetPosition;
+    const outerElement = this.elementRef.nativeElement;
+    const outerElementHeight = outerElement.offsetHeight;
+    const innerElementHeight = this.contentElement.offsetHeight
+    const targetPosition = innerElementHeight - outerElementHeight;
+    if (outerElement.scrollTop <= targetPosition) {
+      outerElement.scrollTop = targetPosition;
     }
   }
 
