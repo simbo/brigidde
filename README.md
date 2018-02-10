@@ -26,8 +26,12 @@ brigidde
 
 ### Server
 
-  - [x] oauth strategy, signup using github or twitter
-      - store user profiles with local uuid and respective auth info
+  - [x] oauth strategywith external providers
+      - [x] store minimum user profiles with respective auth info
+      - [x] support github oauth
+      - [x] support twitter oauth
+      - [ ] support facebook oauth
+  - [ ] local user/password auth strategy
   - [x] jwt auth strategy
   - [x] websocket support
   - [x] couchdb integration using [nano](https://github.com/apache/couchdb-nano)
@@ -66,6 +70,7 @@ brigidde
 
 
 ## Development
+
 
 ### Requirements
 
