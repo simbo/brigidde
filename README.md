@@ -60,6 +60,9 @@ brigidde
   - [x] html templating using [pug](https://pugjs.org/)
   - [x] css development using [stylus](http://stylus-lang.com/) and [postcss](http://postcss.org/)
   - [x] convenient and state-of-the-art build system using [webpack](https://webpack.js.org/)
+      - [x] deterministic chunk cache busting
+      - [x] webpack dev server as proxy for app server
+      - [x] hot module replacement in development
 
 
 ### General
