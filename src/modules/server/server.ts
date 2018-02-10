@@ -1,6 +1,7 @@
 import * as Hapi from 'hapi';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
+import * as Bell from 'bell';
 
 import { chatbotPlugin } from './../chatbot/chatbot-plugin';
 import { websocketPlugin } from './../websocket/websocket-plugin';
@@ -23,6 +24,7 @@ export async function startServer(): Promise<Hapi.Server> {
     databasePlugin,
     redisPlugin,
     reporterPlugin,
+    Bell,
     Inert,
     Vision,
     authPlugin,
