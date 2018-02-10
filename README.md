@@ -15,6 +15,7 @@ brigidde
   - [Requirements](#requirements)
   - [Prerequisites](#prerequisites)
   - [Usage](#usage)
+  - [URLs](#urls)
 
 <!-- /TOC -->
 
@@ -120,8 +121,18 @@ docker-compose run --rm client sh -l
 yarn watch
 ```
 
-With running services, you can open **[localhost:3000](http://localhost:3000)**
-in your host machine browser.
+**Open redis-cli shell:**
 
-If you have enabled webpack bundle analyzer open [localhost:9000](http://localhost:9000)
-for detailed bundle informations.
+``` sh
+docker-compose run --rm redis redis-cli -h redis -a <APP_REDIS_PASSWORD>
+```
+
+
+### URLs
+
+  - **Project UI – [localhost:3000](http://localhost:3000)**
+
+  - CouchDB – [localhost:5984](http://localhost:5984/)  
+    CouchDB Fauxton – [localhost:5984/_utils](http://localhost:5984/_utils/)
+
+  - Webpack bundle analyzer – [localhost:9000](http://localhost:9000)
