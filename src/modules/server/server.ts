@@ -3,12 +3,12 @@ import * as Inert from 'inert';
 import * as Vision from 'vision';
 import * as Bell from 'bell';
 
-import { chatbotPlugin } from './../chatbot/chatbot-plugin';
-import { websocketPlugin } from './../websocket/websocket-plugin';
 import { databasePlugin } from './../database/database-plugin';
 import { redisPlugin } from './../redis/redis-plugin';
 import { reporterPlugin } from './../log/reporter-plugin';
 import { authPlugin } from './../auth/auth-plugin';
+import { websocketPlugin } from './../websocket/websocket-plugin';
+import { chatbotPlugin } from './../chatbot/chatbot-plugin';
 import { viewManager } from './view-manager';
 import { routes } from './routes';
 import { onPreResponse } from './server-event-handlers';
