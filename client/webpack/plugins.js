@@ -8,6 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NamedChunksPlugin = require('webpack/lib/NamedChunksPlugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
+const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
 const OccurrenceOrderPlugin = require('webpack/lib/optimize/OccurrenceOrderPlugin');
 const { join, resolve } = require('path');
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
@@ -15,7 +16,7 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 
 const { globals } = require('./globals');
-const { NODE_ENV, IS_PRODUCTION } = require('./env');
+const { NODE_ENV, IS_PRODUCTION, IS_DEVELOPMENT } = require('./env');
 const { paths } = require('./paths');
 
 const plugins = [
@@ -33,6 +34,12 @@ const plugins = [
 
   // chunk occurence count optimization
   new OccurrenceOrderPlugin(),
+
+  // use consistent named chunks
+  new NamedChunksPlugin(),
+
+  // use consistent named modules
+  new NamedModulesPlugin(),
 
   // shimmed global-scope libs
   new ProvidePlugin({
@@ -94,11 +101,25 @@ const plugins = [
     ]
   })
 
+]
+
+/**
+ * Development-only plugins
+ */
+
+.concat(IS_DEVELOPMENT ? [
+
+  // enable hot module replacement
+  new HotModuleReplacementPlugin()
+
+] : [])
+
+
 /**
  * Production-only plugins
  */
 
-].concat(IS_PRODUCTION ? [
+.concat(IS_PRODUCTION ? [
 
   // delete generated files before build
   new CleanWebpackPlugin([
@@ -107,12 +128,6 @@ const plugins = [
     root: paths.root(),
     exclude: []
   }),
-
-  // use consistent named chunks
-  new NamedChunksPlugin(),
-
-  // use consistent named modules
-  new NamedModulesPlugin(),
 
   // generate deterministic hashes for chunks
   new WebpackMd5Hash(),
