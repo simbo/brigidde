@@ -1,3 +1,7 @@
+const startedAt = Date.now();
+
+import Chalk from 'chalk';
+
 import { join, dirname } from 'path';
 import { config } from 'dotenv';
 
@@ -7,11 +11,17 @@ config({
 });
 
 import { startServer } from './modules/server/server';
+import { logger } from './modules/log/logger';
 
 startServer()
   .then((server) => {
-    console.log(`🦄  App listening on ${server.info.host}:${server.info.port}…`);
+    logger.info([
+      '✅',
+      Chalk.bold('App started'),
+      Chalk.dim(`(after ${(Date.now() - startedAt) / 1000} seconds)`),
+      `Listening on ${server.info.host}:${server.info.port}…`
+    ].join(' '));
   })
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
   });
