@@ -4,24 +4,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 
 import { ServerModule } from './../server/server.module';
+import { StatusBarModule } from '../status-bar/status-bar.module';
+import { MessageBusService } from './message-bus/message-bus.service';
 import { AppComponent } from './app.component';
 import { ScreenComponent } from './screen/screen.component';
-import { StatusBarComponent } from './status-bar/status-bar.component';
-import { MessageBusService } from './message-bus/message-bus.service';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpModule,
     ServerModule,
-  ],
-  declarations: [
-    AppComponent,
-    ScreenComponent,
-    StatusBarComponent
+    StatusBarModule
   ],
   providers: [
     MessageBusService
+  ],
+  declarations: [
+    AppComponent,
+    ScreenComponent
   ],
   bootstrap: [
     AppComponent

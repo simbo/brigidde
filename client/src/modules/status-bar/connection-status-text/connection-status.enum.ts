@@ -1,4 +1,4 @@
-export enum StatusBarConnectionStatus {
+export enum ConnectionStatus {
   Connected,
   Disconnected,
   RetryCountdown
