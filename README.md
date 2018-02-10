@@ -150,6 +150,6 @@ docker-compose run --rm redis redis-cli -h redis -a <APP_REDIS_PASSWORD>
     [localhost:5984/_utils](http://localhost:5984/_utils/)
 
   - Webpack bundle analyzer  
+    [localhost:9001](http://localhost:9001)  
     (can be enabled in `./webpack/plugins.js` and started using
     `docker-compose run --rm -p 9001:9001 client yarn build`)
-    [localhost:9001](http://localhost:9001)  
