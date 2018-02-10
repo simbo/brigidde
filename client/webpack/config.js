@@ -46,7 +46,7 @@ const config = {
     clientLogLevel: 'warning',
     compress: true,
     hot: true,
-    hotOnly: true,
+    hotOnly: false,
     proxy: [{
       context: [
         '/**',
