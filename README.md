@@ -96,43 +96,57 @@ cp .env-sample .env
 
 ### Usage
 
-You can manage the project using `docker-compose` as usual:
+All services are managed via `docker-compose`.
 
 ``` sh
+# start services in dependency order
 docker-compose up -d
 ```
 
-More convenient for development is opening separate container shells for client
-and server to run and observe watch tasks and manage dependencies:
-
-**Open server container shell (with couchdb and redis as dependencies):**
+You can attach to running server or client container's tty to observe dev
+tasks and logs:
 
 ``` sh
-docker-compose run --rm -p 3000:3000 server sh -l
-# within the container, start the server in watch mode
-yarn watch
+# attach to server
+docker attach brigidde_server
+
+# attach to client
+docker attach brigidde_client
 ```
 
-**Open client container shell:**
+Use `ctrl-D,ctrl-Q` to detach from tty and keep the service running.  
+(Using `ctrl-C` will detach and stop the service.)
+
+For convenient package management using `yarn`, open a shell with client or
+server container:
 
 ``` sh
+# open shell with server container
+docker-compose run --rm server sh -l
+
+# open shell with client container
 docker-compose run --rm client sh -l
-# within the container, start webpack in watch mode
-yarn watch
 ```
 
-**Open redis-cli shell:**
+For redis management, open a `redis-cli` shell using password from `.env`:
 
 ``` sh
+# open redis-cli
 docker-compose run --rm redis redis-cli -h redis -a <APP_REDIS_PASSWORD>
 ```
 
 
 ### URLs
 
-  - **Project UI – [localhost:3000](http://localhost:3000)**
+…to use in your host machine browser, when services are running:
 
-  - CouchDB – [localhost:5984](http://localhost:5984/)  
-    CouchDB Fauxton – [localhost:5984/_utils](http://localhost:5984/_utils/)
+  - Webpack Dev Server (also proxy for server requests)  
+    [localhost:9000](http://localhost:9000/)
 
-  - Webpack bundle analyzer – [localhost:9000](http://localhost:9000)
+  - CouchDB Fauxton  
+    [localhost:5984/_utils](http://localhost:5984/_utils/)
+
+  - Webpack bundle analyzer  
+    (can be enabled in `./webpack/plugins.js` and started using
+    `docker-compose run --rm -p 9001:9001 client yarn build`)
+    [localhost:9001](http://localhost:9001)  
