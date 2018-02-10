@@ -22,6 +22,4 @@ startServer()
       `Listening on ${server.info.host}:${server.info.port}…`
     ].join(' '));
   })
-  .catch((err) => {
-    logger.error(err);
-  });
+  .catch((err) => logger.error(err));
