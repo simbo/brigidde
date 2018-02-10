@@ -5,6 +5,7 @@ import * as Vision from 'vision';
 import { chatbotPlugin } from './../chatbot/chatbot-plugin';
 import { websocketPlugin } from './../websocket/websocket-plugin';
 import { databasePlugin } from './../database/database-plugin';
+import { redisPlugin } from './../redis/redis-plugin';
 import { reporterPlugin } from './../log/reporter-plugin';
 import { authPlugin } from './../auth/auth-plugin';
 import { viewManager } from './view-manager';
@@ -20,6 +21,7 @@ export async function startServer(): Promise<Hapi.Server> {
 
   await server.register([
     databasePlugin,
+    redisPlugin,
     reporterPlugin,
     Inert,
     Vision,
