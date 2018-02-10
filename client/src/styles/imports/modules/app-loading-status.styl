@@ -1,0 +1,13 @@
+@require 'global-vars'
+@require 'animations/yarn-spinner'
+
+.app-loading-status
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  opacity: .5
+
+  &::before
+    content: ''
+    animation: yarn-spinner .5s linear infinite
