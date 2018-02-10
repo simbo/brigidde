@@ -9,7 +9,9 @@ brigidde
 
 - [Features [WIP]](#features-wip)
   - [Server](#server)
-- [Development Usage](#development-usage)
+- [Development](#development)
+  - [Prerequisites:](#prerequisites)
+  - [Usage](#usage)
 
 <!-- /TOC -->
 
@@ -45,18 +47,49 @@ brigidde
         [poop](https://github.com/hapijs/poop)
 
 
-## Development Usage
+## Development
 
 **Requirements:** `docker` with `docker-compose`
 
-Install dependencies:  
-`docker-compose run --rm app yarn`
+### Prerequisites:
 
-Copy env file and customize according your needs:  
-`cp .env-sample .env`
+Install server and client dependencies:  
 
-Ready to use docker-compose services.  
-i.e.: `docker-compose up -d`
+``` sh
+docker-compose run --rm server yarn
+docker-compose run --rm client yarn
+```
 
-If you need a container shell:  
-`docker-compose run --rm app sh -l`
+Create an env file, add your api tokens and customize it according your needs:  
+``` sh
+cp .env-sample .env
+```
+
+
+### Usage
+
+You can manage the project using `docker-compose` as usual:
+
+``` sh
+docker-compose up -d
+```
+
+More convenient for development is opening shells for client and server to run
+and observe watch tasks and manage dependencies:
+
+``` sh
+# open server container shell (with couchdb and redis as dependencies)
+docker-compose run --rm -p 3000:3000 server sh -l
+# within the container, start the server in watch mode
+yarn watch
+```
+
+``` sh
+# open client container shell
+docker-compose run --rm client sh -l
+# within the container, start webpack in watch mode
+yarn watch
+```
+
+With running services, you can open **[localhost:3000](http://localhost:3000)**
+in your host machine browser.
