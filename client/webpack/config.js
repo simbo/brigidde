@@ -44,6 +44,7 @@ const config = {
     port: 9000,
     contentBase: paths.src(),
     clientLogLevel: 'warning',
+    historyApiFallback: true,
     compress: true,
     hot: true,
     hotOnly: false,
@@ -53,7 +54,8 @@ const config = {
         '!/index.html',
         '!/scripts/**',
         '!/styles/**',
-        '!/assets/**'
+        '!/assets/**',
+        '!/terminal'
       ],
       target: `${
           process.env.APP_HTTP_SECURE === 'true' ? 'https' : 'http'
