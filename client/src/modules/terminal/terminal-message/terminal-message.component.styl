@@ -1,4 +1,4 @@
-@require './../terminal.component.vars'
+@require './../terminal.vars'
 
 :host
   display: block
@@ -8,11 +8,21 @@
 
 .terminal-message
 
+  &.from-user
+    color: $terminal.textColors.userMessage
+
   &__body
     position: relative
     line-height: $terminal.lineHeight
     min-height: unit($terminal.lineHeight, 'em')
 
-    // ::ng-deep
+    .terminal-message.is-command > &
+      color: $terminal.textColors.userCommand
 
-      // generated content styles
+  &__prompt
+    display: inline-block
+    padding-right: $terminal.prompt.spacing
+
+    &:empty::before
+      content: $terminal.prompt.content
+      color: $terminal.textColors.userMessagePrompt

@@ -2,6 +2,7 @@ import { Component, Input, AfterViewInit, OnDestroy} from '@angular/core';
 
 import { MessageBusService } from './../../app/message-bus/message-bus.service';
 import { TerminalMessage } from './terminal-message';
+import { TerminalMessageType } from './terminal-message-type.enum';
 
 @Component({
   selector: 'terminal-message',
@@ -17,16 +18,19 @@ export class TerminalMessageComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   public get classNames(): {[name: string]: boolean} {
-    return {
+    const classNames = {
+      'is-command': this.message.type === TerminalMessageType.Command
     };
+    classNames[`from-${this.message.from}`] = true;
+    return classNames;
   }
 
   public ngAfterViewInit(): void {
-    this.msgBus.push('request:scroll-down:screen');
+    this.msgBus.push('request:scroll-down:terminal-screen');
   }
 
   public ngOnDestroy(): void {
-    this.msgBus.push('request:scroll-down:screen');
+    this.msgBus.push('request:scroll-down:terminal-screen');
   }
 
 }

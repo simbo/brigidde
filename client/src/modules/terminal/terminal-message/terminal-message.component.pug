@@ -1,6 +1,13 @@
 .terminal-message(
-  [ngClass] = "classNames"
+  [ngClass] = "classNames",
+  [ngSwitch] = "message.from"
 )
-  .terminal-message__body(
-    [innerHTML] = "message.body"
-  )
+  ng-container(*ngSwitchCase = "'user'")
+
+    .terminal-message__body
+      .terminal-message__prompt {{ message.prompt }}
+      | {{ message.body }}
+
+  ng-container(*ngSwitchCaseDefault = "")
+
+    .terminal-message__body([innerHTML] = "message.body")
