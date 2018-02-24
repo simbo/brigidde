@@ -1,8 +1,13 @@
-.terminal-input
+.terminal-input([ngClass] = "classNames")
 
   .terminal-input__prompt {{ prompt }}
 
   textarea.terminal-input__textarea(
+    autocomplete = "off",
+    autocorrect = "off",
+    autocapitalize = "off",
+    spellcheck = "false",
+    (click) = "onClick($event)",
     (keydown.enter) = "onEnterKeyDown($event)",
     [(ngModel)] = "value"
   )

@@ -27,6 +27,16 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
     this.message = new EventEmitter<string>();
   }
 
+  public get classNames(): {[name: string]: boolean} {
+    return {
+      'is-command': this.value && this.value.substr(0, 1) === '/'
+    };
+  }
+
+  public onClick(event: MouseEvent) {
+    event.stopPropagation();
+  }
+
   public onEnterKeyDown(event: KeyboardEvent): void {
     if (event.shiftKey || event.ctrlKey || event.metaKey || event.altKey) return;
     event.preventDefault();
@@ -40,7 +50,7 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
 
   public ngOnInit(): void {
     this.subscriptions.add(
-      this.msgBus.channel('request:focus:chat-input').subscribe(() => this.focus())
+      this.msgBus.channel('request:focus:terminal-input').subscribe(() => this.focus())
     );
   }
 
@@ -48,7 +58,7 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
     this.promptElement = this.elementRef.nativeElement.querySelector('.terminal-input__prompt');
     this.textareaElement = this.elementRef.nativeElement.querySelector('.terminal-input__textarea');
     this.textareaElement.addEventListener('autosize:resized',
-      () => this.msgBus.push('request:scroll-down:screen'));
+      () => this.msgBus.push('request:scroll-down:terminal-screen'));
     autosize(this.textareaElement);
     this.focus();
   }
