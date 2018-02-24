@@ -4,11 +4,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { MessageBusService } from './../../app/message-bus/message-bus.service';
 
 @Component({
-  selector: 'screen',
-  templateUrl: './screen.component.pug',
-  styleUrls: ['./screen.component.styl']
+  selector: 'terminal-screen',
+  templateUrl: './terminal-screen.component.pug',
+  styleUrls: ['./terminal-screen.component.styl']
 })
-export class ScreenComponent implements OnInit, OnDestroy {
+export class TerminalScreenComponent implements OnInit, OnDestroy {
 
   private windowResizeTimeout: number;
   private windowResizeHandler: () => void;
@@ -27,7 +27,7 @@ export class ScreenComponent implements OnInit, OnDestroy {
     this.contentElement = this.elementRef.nativeElement.firstElementChild;
     window.addEventListener('resize', this.windowResizeHandler);
     this.subscriptions.add(
-      this.msgBus.channel('request:scroll-down:screen').subscribe(() => this.scrollDown())
+      this.msgBus.channel('request:scroll-down:terminal-screen').subscribe(() => this.scrollDown())
     );
   }
 
@@ -37,7 +37,7 @@ export class ScreenComponent implements OnInit, OnDestroy {
   }
 
   public onClick(event: Event): void {
-    this.msgBus.push('request:focus:chat-input');
+    this.msgBus.push('request:focus:terminal-input');
   }
 
   private onWindowResize(): void {

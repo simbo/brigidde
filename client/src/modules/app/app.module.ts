@@ -7,7 +7,6 @@ import { ServerModule } from './../server/server.module';
 import { TerminalModule } from './../terminal/terminal.module';
 import { MessageBusService } from './message-bus/message-bus.service';
 import { AppComponent } from './app.component';
-import { ScreenComponent } from './screen/screen.component';
 
 @NgModule({
   imports: [
@@ -20,8 +19,7 @@ import { ScreenComponent } from './screen/screen.component';
     MessageBusService
   ],
   declarations: [
-    AppComponent,
-    ScreenComponent
+    AppComponent
   ],
   bootstrap: [
     AppComponent

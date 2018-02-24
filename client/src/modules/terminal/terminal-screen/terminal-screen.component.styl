@@ -1,16 +1,16 @@
 @require 'global-vars'
 @require 'mixins/layer'
-@require './../../status-bar/status-bar.component.vars'
+@require './../terminal.vars'
 
 :host
   display: block
   width: 100%
-  height: 'calc(100% - %s)' % $statusBar.height
+  height: 'calc(100% - %s)' % $terminal.statusBar.height
   overflow-y: scroll
   -webkit-overflow-scrolling: touch
   background: $colors.textBg
 
-.screen
+.terminal-screen
   position: relative
   width: 100%
   min-height: 100%
