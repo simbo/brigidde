@@ -2,14 +2,13 @@
 
   terminal-screen
 
-    .terminal__message-list(*ngIf = "log")
+    .terminal__content
 
       terminal-message(
-        *ngFor = "let message of log",
+        *ngFor = "let message of messageLog",
         [message] = "message"
       )
 
-    .terminal__message-input
       terminal-input((message) = "onMessageInput($event)")
 
   terminal-status-bar

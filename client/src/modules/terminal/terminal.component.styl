@@ -1,9 +1,11 @@
 @require 'global-vars'
-@require './terminal.component.vars'
+@require './terminal.vars'
 
 .terminal
-  font-family: $fontFamily.monospace
-  padding-top: $terminal.window.padding.y
+  position: relative
+  width: 100vw
+  height: 100vh
 
-  &__message-list
-    padding: 0 $terminal.window.padding.x
+  &__content
+    font-family: $fontFamily.monospace
+    padding: $terminal.content.padding.y $terminal.content.padding.x

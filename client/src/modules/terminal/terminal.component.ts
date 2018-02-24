@@ -1,9 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { MessageBusService } from './../app/message-bus/message-bus.service';
-import { TokenService } from './../server/token/token.service';
-import { SocketService } from './../server/socket/socket.service';
 import { TerminalMessage } from './terminal-message/terminal-message';
 import { TerminalService } from './terminal.service';
 
@@ -17,30 +14,26 @@ import { TerminalService } from './terminal.service';
 })
 export class TerminalComponent implements OnInit, OnDestroy {
 
-  public log: TerminalMessage[];
-  public subscriptions: Set<Subscription>;
+  public messageLog: TerminalMessage[] = [];
+  public subscriptions: Subscription[] = [];
 
   constructor(
-    public terminalService: TerminalService,
-    private msgBus: MessageBusService
-  ) {
-    this.subscriptions = new Set<Subscription>();
-  }
+    public terminalService: TerminalService
+  ) {}
 
-  public onMessageInput(body: string) {
-    this.terminalService.input(body);
+  public onMessageInput(value: string) {
+    this.terminalService.inputResolver.commit(value);
   }
 
   public ngOnInit(): void {
-    this.subscriptions.add(
-      this.terminalService.messageLog.subscribe((log) => {
-        this.log = log;
-      })
-    );
+    this.subscriptions
+      .push(this.terminalService.messageLog.subscribe((log) => {
+        this.messageLog = log;
+      }));
   }
 
   public ngOnDestroy(): void {
-    Array.from(this.subscriptions)
+    this.subscriptions
       .forEach((subscription) => subscription.unsubscribe());
   }
 
