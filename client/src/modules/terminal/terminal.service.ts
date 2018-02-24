@@ -2,45 +2,31 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { SocketServiceMessage } from './../server/socket/socket-service-message.interface';
-import { SocketServiceEventType } from '../server/socket/socket-service-event-type.enum';
-import { SocketService } from './../server/socket/socket.service';
+import { TerminalInputResolver } from './terminal-input/terminal-input-resolver';
 import { TerminalMessage } from './terminal-message/terminal-message';
 
 @Injectable()
 export class TerminalService {
 
-  private readonly messagesSubject: BehaviorSubject<Map<string, TerminalMessage>>;
+  public readonly inputResolver = new TerminalInputResolver();
+  private readonly _messageLog = new BehaviorSubject<Array<TerminalMessage>>([]);
 
-  constructor(
-    private socketService: SocketService,
-  ) {
-    this.messagesSubject = new BehaviorSubject<Map<string, TerminalMessage>>(new Map<string, TerminalMessage>());
-    this.socketService.onMessageReceived.subscribe((data) => this.onSocketMessageReceived(data));
-    this.socketService.onMessageSent.subscribe((data) => this.onSocketMessageSent(data));
+  constructor() {
+    this.inputResolver.result.subscribe((input) => {
+      console.log(input);
+      if (!input) return;
+      this.appendToLog(input.message);
+    });
   }
 
   public get messageLog(): Observable<TerminalMessage[]> {
-    return this.messagesSubject
-      .map((messages) => Array.from(messages.values()))
+    return this._messageLog.asObservable();
   }
 
-  public input(body: string): void {
-    const message = new TerminalMessage(body);
-    this.addMessage(message);
+  private appendToLog(message: TerminalMessage): void {
+    const log = this._messageLog.getValue();
+    log.push(message);
+    this._messageLog.next(log);
   }
-
-  public onSocketMessageReceived(data: SocketServiceMessage): void {
-  }
-
-  public onSocketMessageSent(data: SocketServiceMessage): void {
-  }
-
-  private addMessage(message: TerminalMessage): void {
-    const messages = this.messagesSubject.getValue();
-    messages.set(message.id, message);
-    this.messagesSubject.next(messages);
-  }
-
 
 }
