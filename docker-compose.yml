@@ -38,8 +38,6 @@ services:
       - ./client/dist:/public
       - .:/project
     working_dir: /project/server
-    ports:
-      - 3000:3000
     command: yarn watch
     tty: true
     stdin_open: true
