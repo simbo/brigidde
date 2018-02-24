@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { StatusBarComponent } from './status-bar.component';
+import { TerminalStatusBarComponent } from './terminal-status-bar.component';
 import { ConnectionStatusTextComponent } from './connection-status-text/connection-status-text.component';
 
 @NgModule({
@@ -9,11 +9,11 @@ import { ConnectionStatusTextComponent } from './connection-status-text/connecti
     CommonModule
   ],
   declarations: [
-    StatusBarComponent,
+    TerminalStatusBarComponent,
     ConnectionStatusTextComponent
   ],
   exports: [
-    StatusBarComponent
+    TerminalStatusBarComponent
   ]
 })
-export class StatusBarModule {}
+export class TerminalStatusBarModule {}

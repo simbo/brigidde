@@ -1,0 +1,29 @@
+@require 'global-vars'
+
+$terminal = {
+  content: {
+    padding: {
+      x: .5rem,
+      y: .5rem
+    }
+  },
+  lineHeight: $lineHeight.large,
+  textColors: {
+    input: $colors.terminalWhite,
+    inputPrompt: $colors.terminalMagenta,
+    inputCommand: $colors.terminalCyan,
+    userMessage: darken($colors.terminalWhite, 20%),
+    userMessagePrompt: darken($colors.terminalMagenta, 50%)
+    userCommand: darken($colors.terminalCyan, 20%),
+  }
+  message: {
+    spacing: .05rem,
+  },
+  prompt: {
+    spacing: .4em,
+    content: '❯'
+  },
+  statusBar: {
+    height: 24px
+  }
+}

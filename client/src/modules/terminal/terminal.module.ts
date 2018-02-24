@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { TerminalComponent } from './terminal.component';
 import { TerminalInputComponent } from './terminal-input/terminal-input.component';
 import { TerminalMessageComponent } from './terminal-message/terminal-message.component';
+import { TerminalStatusBarModule } from './terminal-status-bar/terminal-status-bar.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    TerminalStatusBarModule
   ],
   declarations: [
     TerminalComponent,

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { SocketService } from './../../server/socket/socket.service';
+import { SocketService } from './../../../server/socket/socket.service';
 import { ConnectionStatus } from './connection-status.enum';
 
 @Component({

@@ -1,5 +1,5 @@
 @require 'global-vars'
-@require './status-bar.component.vars'
+@require './../terminal.vars'
 
 :host
   display: block
@@ -7,9 +7,9 @@
   bottom: 0
   left: 0
   width: 100%
-  height: $statusBar.height
+  height: $terminal.statusBar.height
 
-.status-bar
+.terminal-status-bar
   display: flex
   height: 100%
   background: $colors.statusBarBg
@@ -18,4 +18,4 @@
 
   &__item
     padding: 0 .5em
-    line-height: $statusBar.height
+    line-height: $terminal.statusBar.height
