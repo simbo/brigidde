@@ -9,7 +9,7 @@
 .terminal-message
 
   &.from-user
-    color: $terminal.textColors.userMessage
+    color: $terminal.textColors.message
 
   &__body
     position: relative
@@ -17,7 +17,7 @@
     min-height: unit($terminal.lineHeight, 'em')
 
     .terminal-message.is-command > &
-      color: $terminal.textColors.userCommand
+      color: $terminal.textColors.command
 
   &__prompt
     display: inline-block
@@ -25,4 +25,4 @@
 
     &:empty::before
       content: $terminal.prompt.content
-      color: $terminal.textColors.userMessagePrompt
+      color: $terminal.textColors.messagePrompt

@@ -53,20 +53,25 @@ export class ConnectionStatusTextComponent implements OnInit, OnDestroy {
         break;
 
       case ConnectionStatus.Disconnected:
-        this.message.next('Disconnected');
+        this.message.next('Not connected');
         break;
 
       case ConnectionStatus.RetryCountdown:
         const timeoutDuration = SocketService.getReconnectRetryTimeout(attempts);
         const nextTryTimestamp = timeoutDuration + Date.now();
         const updateRetryMessage = () => {
-          const secondsUntilNextTry = Math.ceil((nextTryTimestamp - Date.now()) / 1000);
+          const secondsUntilNextTry =
+            Math.ceil((nextTryTimestamp - Date.now()) / 1000);
           if (secondsUntilNextTry <= 0) {
             window.clearInterval(this.messageInterval);
             return;
           }
           this.message.next(
-            `Connection failed. Retrying in ${secondsUntilNextTry} second${secondsUntilNextTry>1?'s':''}…`
+            `Connection failed. Retrying in ${
+              secondsUntilNextTry
+            } second${
+              secondsUntilNextTry > 1 ? 's' : ''
+            }…`
           );
         };
         updateRetryMessage();

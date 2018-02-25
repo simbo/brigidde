@@ -8,6 +8,6 @@
       .terminal-message__prompt {{ message.prompt }}
       | {{ message.body }}
 
-  ng-container(*ngSwitchCaseDefault = "")
+  ng-container(*ngSwitchDefault = "")
 
     .terminal-message__body([innerHTML] = "message.body")
