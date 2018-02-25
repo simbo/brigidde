@@ -42,8 +42,6 @@ export class TerminalInputResolver {
 
   private async filterMessageBody(body: string): Promise<string> {
     return body
-      // remove leading and trailing linebreaks
-      .replace(/(^[\r\n]+)|([\r\n]+$)/g, '')
       // reduce leading and trailing whitespace
       .replace(/(^[\s\r\n]+)|([\s\r\n]+$)/g, ' ');
   }
