@@ -18,4 +18,4 @@ export const routes: Routes = [
     RouterModule
   ]
 })
-export class StudentsRoutingModule {}
+export class TerminalRoutingModule {}
