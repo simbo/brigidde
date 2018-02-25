@@ -1,7 +1,7 @@
 brigidde
 ========
 
-> A terminal-like progressive web app.
+  > A terminal-like progressive web app with angular client and hapi server.
 
 ---
 
