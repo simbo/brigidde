@@ -19,7 +19,7 @@ export class ConnectionStatusTextComponent implements OnInit, OnDestroy {
   constructor(
     private socketService: SocketService
   ) {
-    this.message = new BehaviorSubject<string>('Disconnected');
+    this.message = new BehaviorSubject<string>('Not connected');
     this.subscriptions = new Set<Subscription>();
   }
 
