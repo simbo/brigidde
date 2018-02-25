@@ -1,12 +1,13 @@
 brigidde
 ========
 
-> Playground project. Something with angular client and hapi server.
+> A terminal-like progressive web app.
 
 ---
 
 <!-- TOC -->
 
+- [Application goals [WIP]](#application-goals-wip)
 - [Features [WIP]](#features-wip)
   - [Server](#server)
   - [Client](#client)
@@ -21,13 +22,20 @@ brigidde
 
 ---
 
+## Application goals [WIP]
+
+  - [x] A terminal-like progressive web app.
+  - [ ] You can run commands.
+  - [ ] You can interact with a human-like ai assistant.
+  - [ ] You can authenticate and connect with other users.
+
 
 ## Features [WIP]
 
 
 ### Server
 
-  - [x] oauth strategywith external providers
+  - [x] oauth strategy with external providers
       - [x] store minimum user profiles with respective auth info
       - [x] support github oauth
       - [x] support twitter oauth
@@ -83,68 +91,45 @@ brigidde
 
 ### Prerequisites
 
-Install server and client dependencies:
+Run the init command: `./app init`
 
-``` sh
-docker-compose run --rm server yarn
-docker-compose run --rm client yarn
-```
+This will install dependencies and create a sample `.env` file, if not existing.
 
-Create an env file, add your api tokens and customize it according your needs:
-
-``` sh
-cp .env-sample .env
-```
+Edit the `.env` file to set your api keys and secrets.
 
 
 ### Usage
 
-All services are managed via `docker-compose`.
+See `./app` shell script for common task.
 
-``` sh
-# start services in dependency order
-docker-compose up -d
 ```
+Usage: ./app <cmd> [<options>]
 
-You can attach to running server or client container's tty to observe dev
-tasks and logs:
-
-``` sh
-# attach to server
-docker attach brigidde_server
-
-# attach to client
-docker attach brigidde_client
-```
-
-Use `ctrl-D,ctrl-Q` to detach from tty and keep the service running.  
-(Using `ctrl-C` will detach and stop the service.)
-
-For convenient package management using `yarn`, open a shell within client or
-server container:
-
-``` sh
-# open shell in server container
-docker-compose exec server sh -l
-
-# open shell in client container
-docker-compose exec client sh -l
-```
-
-For redis management, open a `redis-cli` shell using password from `.env`:
-
-``` sh
-# open redis-cli
-docker-compose run --rm redis redis-cli -h redis -a <APP_REDIS_PASSWORD>
+Available Commands:
+–––––––––––––––––––
+init → initialize project and install dependencies
+start → start/restart services in development mode
+stop → stop services
+attach client → attach to client service (ctrl-c to detach)
+attach server → attach to server service (ctrl-c to detach)
+shell → open a node container shell
+redis → open a redis-cli shell
+analyzer → start webpack production build with bundle analyzer service
+build → build client for production
+destroy → destroy all containers and volumes
 ```
 
 
 ### URLs
 
-…to use in your host machine browser, when services are running:
+…to use in your host machine, when services are running:
 
-  - Webpack Dev Server (also proxy for server requests)  
+  - Webpack Dev Server (serves live-reloaded client with hmr support,
+    proxy for api/socket calls to hapi server)  
     [localhost:9000](http://localhost:9000/)
+
+  - Hapi Server (api and socket, serves static built client)  
+    [localhost:3000](http://localhost:3000/)
 
   - CouchDB Fauxton  
     [localhost:5984/_utils](http://localhost:5984/_utils/)
