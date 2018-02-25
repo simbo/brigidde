@@ -12,6 +12,7 @@ export class TerminalMessage {
   public readonly from: TerminalMessageSource;
   public readonly type: TerminalMessageType
   public readonly body: string;
+  public readonly bodyRaw: string;
   public readonly prompt: string;
 
   constructor(body: string | TerminalMessageData) {
@@ -23,16 +24,11 @@ export class TerminalMessage {
     this.date = data.hasOwnProperty('date') ? new Date(data.date) : new Date();
     this.from = data.hasOwnProperty('from') ? data.from : TerminalMessageSource.System;
     this.type = data.hasOwnProperty('type') ? data.type : TerminalMessageType.Message;
-    this.body = data.body;
+    this.bodyRaw = data.hasOwnProperty('bodyRaw') ? data.bodyRaw : data.body;
+    this.body = data.body
+      // reduce leading and trailing whitespace
+      .replace(/(^[\s\r\n]+)|([\s\r\n]+$)/g, ' ');
     this.prompt = data.prompt || '';
-  }
-
-  public getObject(): TerminalMessageData {
-    return {
-      id: this.id,
-      body: this.body,
-      date: this.date.toISOString()
-    };
   }
 
 }

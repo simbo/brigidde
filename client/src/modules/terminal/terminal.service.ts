@@ -7,7 +7,6 @@ import { TerminalInputResolver } from './terminal-input/terminal-input-resolver'
 import { TerminalMessage } from './terminal-message/terminal-message';
 import { TerminalMessageType } from './terminal-message/terminal-message-type.enum';
 import { TerminalCommandRunner } from './terminal-commands/terminal-command-runner';
-import { TerminalInput } from './terminal-input/terminal-input.interface';
 import { TerminalCommandRunnerStatus } from './terminal-commands/terminal-command-runner-status.enum';
 
 @Injectable()
@@ -42,12 +41,12 @@ export class TerminalService {
     this._messageLog.next(log);
   }
 
-  private handleInput(input: TerminalInput): void {
-    if (!input) return;
-    this.appendToLog(input.message);
-    switch(input.message.type) {
+  private handleInput(message: TerminalMessage): void {
+    if (!message) return;
+    this.appendToLog(message);
+    switch(message.type) {
       case TerminalMessageType.Command:
-        this.runCommand(input.message);
+        this.runCommand(message);
         break;
       case TerminalMessageType.Message:
       default:

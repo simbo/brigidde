@@ -7,5 +7,6 @@ export interface TerminalMessageData {
   from?: TerminalMessageSource;
   type?: TerminalMessageType;
   body: string;
+  bodyRaw?: string;
   prompt?: string;
 }
