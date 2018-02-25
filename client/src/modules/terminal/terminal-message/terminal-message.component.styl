@@ -15,9 +15,18 @@
     position: relative
     line-height: $terminal.lineHeight
     min-height: unit($terminal.lineHeight, 'em')
+    white-space: pre-wrap
 
     .terminal-message.is-command > &
       color: $terminal.textColors.command
+
+    ::ng-deep
+
+      .text--command
+        color: $terminal.textColors.command
+
+      .text--secondary
+        color: $terminal.textColors.secondary
 
   &__prompt
     display: inline-block
