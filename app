@@ -21,7 +21,7 @@ case $1 in
   ;;
 
   "stop")
-    docker-compose down client server redis couchdb
+    docker-compose down
   ;;
 
   "attach")
