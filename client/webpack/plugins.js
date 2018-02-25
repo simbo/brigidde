@@ -135,17 +135,27 @@ const plugins = [
   // uglify
   new UglifyJsPlugin({
     sourceMap: true
-  }),
+  })
 
-  // // optional bundle analyzer service
-  // new BundleAnalyzerPlugin({
-  //   analyzerMode: 'server',
-  //   analyzerHost: '0.0.0.0',
-  //   analyzerPort: 9001,
-  //   defaultSizes: 'gzip',
-  //   openAnalyzer: false
-  // })
+] : [])
+
+
+/**
+ * Bundle Analyzer
+ */
+
+.concat(IS_PRODUCTION && process.env.BUNDLE_ANALYZER ? [
+
+  // optional bundle analyzer service
+  new BundleAnalyzerPlugin({
+    analyzerMode: 'server',
+    analyzerHost: '0.0.0.0',
+    analyzerPort: 9001,
+    defaultSizes: 'gzip',
+    openAnalyzer: false
+  })
 
 ] : []);
+
 
 module.exports = { plugins };
