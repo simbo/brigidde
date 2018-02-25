@@ -39,6 +39,8 @@ services:
       - .:/project
     working_dir: /project/server
     command: yarn watch
+    ports:
+      - 3000:3000
     tty: true
     stdin_open: true
 
@@ -55,3 +57,10 @@ services:
     command: yarn dev
     tty: true
     stdin_open: true
+
+  node:
+    image: simbo/node:8-alpine
+    volumes:
+      - .:/project
+    working_dir: /project
+    command: sh -l
