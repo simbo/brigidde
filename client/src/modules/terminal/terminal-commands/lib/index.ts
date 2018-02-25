@@ -1,8 +1,8 @@
 import { TerminalCommandHandler } from './../terminal-command-handler.interface';
 
-import { commandsCommand } from './commands/commands';
-import { nowCommand } from './now/now';
-import { echoCommand } from './echo/echo';
+import { commandsCommand } from './commands/commands.command';
+import { nowCommand } from './now/now.command';
+import { echoCommand } from './echo/echo.command';
 
 export const commands: TerminalCommandHandler[] = [
   commandsCommand,
