@@ -16,6 +16,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   public messageLog: TerminalMessage[] = [];
   public subscriptions: Subscription[] = [];
+  public inputBlocked: boolean = false;
 
   constructor(
     public terminalService: TerminalService
@@ -26,15 +27,24 @@ export class TerminalComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscriptions
-      .push(this.terminalService.messageLog.subscribe((log) => {
-        this.messageLog = log;
-      }));
+    this.subscriptions.push(
+
+      this.terminalService.messageLog
+        .map((log) => Array.from(log.values()))
+        .subscribe((log) => {
+          this.messageLog = log;
+        }),
+
+      this.terminalService.inputBlocked
+        .subscribe((blocked) => {
+          this.inputBlocked = blocked;
+        })
+
+    );
   }
 
   public ngOnDestroy(): void {
-    this.subscriptions
-      .forEach((subscription) => subscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
 }

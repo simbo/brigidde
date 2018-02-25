@@ -9,6 +9,9 @@
         [message] = "message"
       )
 
-      terminal-input((message) = "onMessageInput($event)")
+      terminal-input(
+        *ngIf = "!inputBlocked",
+        (message) = "onMessageInput($event)"
+      )
 
   terminal-status-bar
