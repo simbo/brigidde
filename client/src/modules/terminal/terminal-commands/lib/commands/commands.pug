@@ -2,8 +2,8 @@ strong Available Commands:
 | #{ '\n' }
 each cmd in cmds
   span.text--command #{ cmd.usage || cmd.name }
-  |  ▶ #{ cmd.description }
+  |  → #{ cmd.description }
   if (cmd.aliases && cmd.aliases.length)
-    - var label = 'Alias ' + (cmd.aliases.length > 1 ? 'es' : '')
+    - var label = 'Alias' + (cmd.aliases.length > 1 ? 'es' : '')
     span.text--secondary  (#{ label }: #{ cmd.aliases.join(', ') })
   | #{ '\n' }
