@@ -1,5 +1,4 @@
 import * as uuid from 'uuid/v4';
-import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
 import { TerminalMessageData } from './terminal-message-data.interface';
@@ -26,10 +25,6 @@ export class TerminalMessage {
     this.type = data.hasOwnProperty('type') ? data.type : TerminalMessageType.Message;
     this.body = data.body;
     this.prompt = data.prompt || '';
-  }
-
-  public get moment(): moment.Moment {
-    return moment(this.date);
   }
 
   public getObject(): TerminalMessageData {
