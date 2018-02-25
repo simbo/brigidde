@@ -126,7 +126,7 @@ const config = {
           'raw-loader',
           loaders.pugHtml
         ],
-        exclude: /node_modules/
+        exclude: /node_modules|terminal-commands\/lib/
       }
 
     ]
