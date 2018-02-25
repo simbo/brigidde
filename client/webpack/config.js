@@ -124,7 +124,7 @@ const config = {
         test: /\.pug$/,
         use: [
           'raw-loader',
-          loaders.pug
+          loaders.pugHtml
         ],
         exclude: /node_modules/
       }

@@ -1,11 +1,11 @@
 const { postcssLoader } = require('./postcss');
 const { stylusLoader } = require('./stylus');
-const { pugLoader } = require('./pug');
+const { pugHtmlLoader } = require('./pug-html');
 
 const loaders = {
   postcss: postcssLoader,
   stylus: stylusLoader,
-  pug: pugLoader
+  pugHtml: pugHtmlLoader
 };
 
 module.exports = { loaders };

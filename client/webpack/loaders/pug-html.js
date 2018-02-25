@@ -1,10 +1,10 @@
 const { globals } = require('./../globals');
 
-const pugLoader = {
+const pugHtmlLoader = {
   loader: 'pug-html-loader',
   options: {
     data: globals
   }
 };
 
-module.exports = { pugLoader };
+module.exports = { pugHtmlLoader };
