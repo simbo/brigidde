@@ -13,7 +13,7 @@ import { commandsByName } from './lib';
 export class TerminalCommandRunner {
 
   private _blocking: boolean = true;
-  private readonly _output = new Subject<string>();
+  private readonly _output = new Subject<string|TerminalMessage>();
   private readonly _status = new BehaviorSubject<TerminalCommandRunnerStatus>(
     TerminalCommandRunnerStatus.Created
   );
@@ -26,7 +26,7 @@ export class TerminalCommandRunner {
     if (!this.command) this.stop();
   }
 
-  public get output(): Observable<string> {
+  public get output(): Observable<string|TerminalMessage> {
     return this._output.asObservable();
   }
 
@@ -45,14 +45,8 @@ export class TerminalCommandRunner {
     ) return;
     this._status.next(TerminalCommandRunnerStatus.Blocking);
     this.command.handler
-      .run(
-        this.command.parseArgs,
-        this._output,
-        () => this.unblock()
-      )
-      .then(() => {
-        this.stop();
-      })
+      .run(this.command.parseArgs, this._output, () => this.unblock())
+      .then(() => this.stop())
       .catch((err) => {
         this.stop();
         console.error(err);

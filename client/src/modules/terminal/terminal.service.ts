@@ -59,7 +59,8 @@ export class TerminalService {
     const runner = new TerminalCommandRunner(commandMessage);
     runner.output
       .subscribe((output) => {
-        const outputMessage = new TerminalMessage(output);
+        const outputMessage = output instanceof TerminalMessage ?
+          output : new TerminalMessage(output as string);
         this.appendToLog(outputMessage);
       });
     runner.status
