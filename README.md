@@ -25,7 +25,7 @@ brigidde
 ## Application goals [WIP]
 
   - [x] A terminal-like progressive web app.
-  - [ ] You can run commands.
+  - [x] You can run commands.
   - [ ] You can interact with a human-like ai assistant.
   - [ ] You can authenticate and connect with other users.
 
