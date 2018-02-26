@@ -30,7 +30,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
 
       this.terminalService.messageLog
-        .map((log) => Array.from(log.values()))
         .subscribe((log) => {
           this.messageLog = log;
         }),

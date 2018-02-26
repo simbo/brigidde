@@ -20,8 +20,32 @@ export class TerminalService {
     this.inputResolver.result.subscribe((input) => this.handleInput(input));
   }
 
-  public get messageLog(): Observable<Map<string, TerminalMessage>> {
-    return this._messageLog.asObservable();
+  public get messageLog(): Observable<TerminalMessage[]> {
+    const sort = (a, b) => {
+      if (a > b) return 1;
+      if (a < b) return -1;
+      return 0;
+    }
+    return this._messageLog
+      .map((log) => Array.from(log.values()))
+      // sort messages by parent relation and timestamp
+      .map((log) => log.sort((a, b) => {
+        if (a.parent && b.parent) {
+          if (a.parent === b.parent) {
+            return sort(a.date.getTime(), b.date.getTime());
+          }
+          return sort(a.parent.date.getTime(), b.parent.date.getTime());
+        }
+        if (a.parent) {
+          if (a.parent.id === b.id) return 1;
+          return sort(a.parent.date.getTime(), b.date.getTime());
+        }
+        if (b.parent) {
+          if (b.parent.id === a.id) return -1;
+          return sort(a.date.getTime(), b.parent.date.getTime());
+        }
+        return sort(a.date.getTime(), b.date.getTime());
+      }));
   }
 
   public get runners(): Observable<Set<TerminalCommandRunner>> {
@@ -60,6 +84,7 @@ export class TerminalService {
       .subscribe((output) => {
         const outputMessage = output instanceof TerminalMessage ?
           output : new TerminalMessage(output as string);
+        outputMessage.setParent(commandMessage);
         this.appendToLog(outputMessage);
       });
     runner.status
