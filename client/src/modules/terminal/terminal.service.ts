@@ -8,6 +8,7 @@ import { TerminalMessage } from './terminal-message/terminal-message';
 import { TerminalMessageType } from './terminal-message/terminal-message-type.enum';
 import { TerminalCommandRunner } from './terminal-commands/terminal-command-runner';
 import { TerminalCommandRunnerStatus } from './terminal-commands/terminal-command-runner-status.enum';
+import { TerminalMessageSource } from './terminal-message/terminal-message-source.enum';
 
 @Injectable()
 export class TerminalService {
@@ -43,6 +44,15 @@ export class TerminalService {
         }
         return a.date.getTime() - b.date.getTime();
       }));
+  }
+
+  public get inputHistory(): Observable<TerminalMessage[]> {
+    return this._messages
+      .map((messages) => Array.from(messages.values()))
+      .map((messages) => messages
+        .filter((message) => message.from === TerminalMessageSource.User)
+        .sort((a, b) => a.date.getTime() - b.date.getTime())
+      );
   }
 
   public get runners(): Observable<Set<TerminalCommandRunner>> {

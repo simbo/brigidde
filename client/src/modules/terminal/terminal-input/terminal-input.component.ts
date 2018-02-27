@@ -1,8 +1,11 @@
 import { Component, Input, Output, EventEmitter, ElementRef, AfterViewInit, AfterViewChecked, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import * as autosize from 'autosize';
+import * as keycode from 'keycode';
 
 import { MessageBusService } from './../../app/message-bus/message-bus.service';
+import { TerminalService } from './../terminal.service';
+import { TerminalMessage } from './../terminal-message/terminal-message';
 
 @Component({
   selector: 'terminal-input',
@@ -12,19 +15,28 @@ import { MessageBusService } from './../../app/message-bus/message-bus.service';
 export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
 
   @Input() public prompt: string;
-  @Output() public message: EventEmitter<string>;
+  @Output() public message = new EventEmitter<string>();
 
-  public value: string;
+  public _value: string;
   public textareaElement: HTMLElement;
   public promptElement: HTMLElement;
-  public subscriptions: Set<Subscription>;
+  public subscriptions: Subscription[] = [];
+  public history: string[] = [];
+  public historyIndex: number = null;
 
   constructor(
+    public terminalService: TerminalService,
     public msgBus: MessageBusService,
     public elementRef: ElementRef
-  ) {
-    this.subscriptions = new Set<Subscription>();
-    this.message = new EventEmitter<string>();
+  ) {}
+
+  public get value(): string {
+    return this._value;
+  }
+
+  public set value(val: string) {
+    this._value = val;
+    this.historyStateCheck();
   }
 
   public get classNames(): {[name: string]: boolean} {
@@ -33,24 +45,10 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
     };
   }
 
-  public onClick(event: MouseEvent) {
-    event.stopPropagation();
-  }
-
-  public onEnterKeyDown(event: KeyboardEvent): void {
-    if (event.shiftKey || event.ctrlKey || event.metaKey || event.altKey) return;
-    event.preventDefault();
-    this.submitValue();
-  }
-
-  public submitValue(): void {
-    this.message.emit(this.value);
-    this.value = '';
-  }
-
   public ngOnInit(): void {
-    this.subscriptions.add(
-      this.msgBus.channel('request:focus:terminal-input').subscribe(() => this.focus())
+    this.subscriptions.push(
+      this.msgBus.channel('request:focus:terminal-input').subscribe(() => this.focus()),
+      this.terminalService.inputHistory.subscribe((history) => this.onHistoryUpdate(history))
     );
   }
 
@@ -72,8 +70,89 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
+  public onClick(event: MouseEvent) {
+    event.stopPropagation();
+  }
+
+  public onKeyDown(event: KeyboardEvent): void {
+    const modKey = event.shiftKey || event.ctrlKey || event.metaKey || event.altKey;
+    const key = keycode(event.keyCode);
+    switch(key) {
+      case 'enter':
+        if (modKey) return;
+        event.preventDefault();
+        this.submitValue();
+        return;
+      case 'up':
+        if (modKey) return;
+        event.preventDefault();
+        this.historyBack();
+        return;
+      case 'down':
+        if (modKey) return;
+        event.preventDefault();
+        this.historyForward();
+        return;
+      case 'tab':
+        event.preventDefault();
+        return;
+      default:
+        return;
+    }
+  }
+
+  public submitValue(): void {
+    this.message.emit(this.value);
+    this.value = '';
+    this.historyReset();
+  }
+
   private focus(): void {
     this.textareaElement.focus();
+  }
+
+  private onHistoryUpdate(messages: TerminalMessage[]) {
+    let previousMessage: string = null;
+    this.history = messages
+      .map((message) => message.body)
+      // remove adjacent duplicates
+      .reduce((msgs, message) => {
+        if (!previousMessage || previousMessage !== message) {
+          msgs.push(message);
+        }
+        previousMessage = message;
+        return msgs;
+      }, [])
+      .reverse()
+  }
+
+  private historyBack(): void {
+    if (this.historyIndex === null) {
+      this.history.unshift(this.value);
+      this.historyIndex = 0;
+    }
+    this.historyIndex = Math.min(this.history.length - 1, this.historyIndex + 1);
+    this.value = this.history[this.historyIndex];
+  }
+
+  private historyForward(): void {
+    if (!this.historyIndex) return;
+    this.historyIndex = Math.max(0, this.historyIndex - 1);
+    this.value = this.history[this.historyIndex];
+  }
+
+  private historyStateCheck(): void {
+    if (this.historyIndex === null) return;
+    if (this.value !== this.history[this.historyIndex]) {
+      this.historyReset();
+    }
+  }
+
+  private historyReset(): void {
+    if (this.historyIndex !== null) {
+      this.historyIndex = null;
+      this.history.shift();
+    }
   }
 
 }
