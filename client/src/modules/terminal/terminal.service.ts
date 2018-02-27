@@ -14,37 +14,34 @@ export class TerminalService {
 
   public readonly inputResolver = new TerminalInputResolver();
   public readonly _runners = new BehaviorSubject(new Set<TerminalCommandRunner>())
-  private readonly _messageLog = new BehaviorSubject(new Map<string, TerminalMessage>());
+  private readonly _messages = new BehaviorSubject(new Map<string, TerminalMessage>());
 
   constructor() {
     this.inputResolver.result.subscribe((input) => this.handleInput(input));
   }
 
+  public get messages(): Observable<Map<string, TerminalMessage>> {
+    return this._messages.asObservable();
+  }
+
   public get messageLog(): Observable<TerminalMessage[]> {
-    const sort = (a, b) => {
-      if (a > b) return 1;
-      if (a < b) return -1;
-      return 0;
-    }
-    return this._messageLog
-      .map((log) => Array.from(log.values()))
+    return this._messages
+      .map((messages) => Array.from(messages.values()))
       // sort messages by parent relation and timestamp
-      .map((log) => log.sort((a, b) => {
+      .map((messages) => messages.sort((a, b) => {
         if (a.parent && b.parent) {
-          if (a.parent === b.parent) {
-            return sort(a.date.getTime(), b.date.getTime());
-          }
-          return sort(a.parent.date.getTime(), b.parent.date.getTime());
+          if (a.parent === b.parent) return a.date.getTime() - b.date.getTime();
+          return a.parent.date.getTime() - b.parent.date.getTime();
         }
         if (a.parent) {
           if (a.parent.id === b.id) return 1;
-          return sort(a.parent.date.getTime(), b.date.getTime());
+          return a.parent.date.getTime() - b.date.getTime();
         }
         if (b.parent) {
           if (b.parent.id === a.id) return -1;
-          return sort(a.date.getTime(), b.parent.date.getTime());
+          return a.date.getTime() - b.parent.date.getTime();
         }
-        return sort(a.date.getTime(), b.date.getTime());
+        return a.date.getTime() - b.date.getTime();
       }));
   }
 
@@ -60,9 +57,9 @@ export class TerminalService {
   }
 
   private appendToLog(message: TerminalMessage): void {
-    const log = this._messageLog.getValue();
+    const log = this._messages.getValue();
     log.set(message.id, message);
-    this._messageLog.next(log);
+    this._messages.next(log);
   }
 
   private handleInput(message: TerminalMessage): void {
