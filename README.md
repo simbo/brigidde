@@ -86,37 +86,45 @@ brigidde
 
 ### Requirements
 
-`docker` with `docker-compose`
+`docker`, `docker-compose`, `make`
 
 
 ### Prerequisites
 
-Run the init command: `./app init`
+Create your custom `.env` with your settings, api keys and secrets.
 
-This will install dependencies and create a sample `.env` file, if not existing.
+Start off with a copy of `.env-sample`:  
 
-Edit the `.env` file to set your api keys and secrets.
+``` sh
+cp .env-sample .env
+```
 
 
 ### Usage
 
-See `./app` shell script for common task.
+There's a `Makefile` for common dev tasks.
+
+You propably want to run `make start`.  
+Dependencies should be installed automatically.
+
+Run just `make` for usage information:
 
 ```
-Usage: ./app <cmd> [<options>]
+Usage: make <target>
 
-Available Commands:
-–––––––––––––––––––
-init → initialize project and install dependencies
-start → start/restart services in development mode
-stop → stop services
-attach client → attach to client service (ctrl-c to detach)
-attach server → attach to server service (ctrl-c to detach)
-shell → open a node container shell
+start → (re)start all services
+stop → stop all services
+server → attach to server log
+client → attach to client log
+shell → open a shell in node container
 redis → open a redis-cli shell
-analyzer → start webpack production build with bundle analyzer service
-build → build client for production
-destroy → destroy all containers and volumes
+analyzer → start bundle analyzer service
+install → shortcut for install_server and install_client
+install_server → install server node modules
+install_client → install client node modules
+remove → shortcut for remove_server and remove_client
+remove_server → remove server node_modules
+remove_client → remove client node_modules
 ```
 
 

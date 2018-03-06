@@ -17,7 +17,7 @@ client: ## attach to client log
 	@docker attach --detach-keys="ctrl-c" brigidde_client || true
 
 .PHONY: shell
-shell: ## open a node container shell
+shell: ## open a shell in node container
 	@docker-compose run --rm node sh -l
 
 .PHONY: redis
@@ -25,8 +25,8 @@ redis: ## open a redis-cli shell
 	@docker-compose exec redis redis-cli -h redis -a `cat .env | grep APP_REDIS_PASSWORD | sed 's/.*=\(\)/\1/'`
 
 .PHONY: analyzer
-analyzer: check-install_client ## start bundle analyzer service at localhost:8081
-	@docker-compose run --rm -p 8081:8081 node yarn analyzer || true
+analyzer: check-install_client ## start bundle analyzer service
+	@docker-compose run --rm -w /project/client -p 9001:9001 node yarn analyzer || true
 
 .PHONY: install
 install: ## shortcut for install_server and install_client
@@ -71,6 +71,6 @@ check-install_client: # install if node_modules doesn't exist or lockfile change
 .DEFAULT_GOAL :=
 .PHONY: help
 help: # help text auto-generated from comments
-	@echo "\nUsage: \033[1;37mmake <command>\033[0m\n"
+	@echo "\nUsage: \033[1;37mmake <target>\033[0m\n"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk \
 		'BEGIN {FS = ":.*?## "}; {printf "\033[0;36m%s\033[0m \033[0;37m→\033[0m %s\n", $$1, $$2}'
