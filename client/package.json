@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "src/main.ts",
   "engines": {
-    "node": "8.9.x"
+    "node": "8.9.4"
   },
   "scripts": {
     "analyzer": "NODE_ENV=production BUNDLE_ANALYZER=1 webpack --hide-modules --bail",

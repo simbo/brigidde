@@ -58,7 +58,7 @@ services:
     stdin_open: true
 
   node:
-    image: simbo/node:8-alpine
+    image: simbo/node:8.9.4-alpine
     volumes:
       - .:/project
     working_dir: /project
