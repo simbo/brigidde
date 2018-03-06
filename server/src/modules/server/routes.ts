@@ -4,7 +4,7 @@ export const routes = [
   {
     method: 'get',
     path: '/favicon.ico',
-    handler(req, h) {
+    async handler(req, h) {
       return h.response().code(200);
     }
   },
