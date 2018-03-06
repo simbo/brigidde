@@ -27,9 +27,7 @@ const plugins = [
       data[key] = JSON.stringify(globals[key]);
       return data;
     }, {}),
-    'process.env': {
-      NODE_ENV: JSON.stringify(NODE_ENV)
-    }
+    'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
   }),
 
   // chunk occurence count optimization
