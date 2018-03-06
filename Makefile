@@ -29,28 +29,16 @@ analyzer: check-install_client ## start bundle analyzer service
 	@docker-compose run --rm -w /project/client -p 9001:9001 node yarn analyzer || true
 
 .PHONY: install
-install: ## shortcut for install_server and install_client
+install: # install client and server node_modules
 	@$(MAKE) install_server && $(MAKE) install_client
 
 .PHONY: install_server
-install_server: ## install server node modules (automatically called if necessary)
+install_server: # install server node_modules
 	@docker-compose run --rm -w /project/server node yarn
 
 .PHONY: install_client
-install_client: ## install client node modules (automatically called if necessary)
+install_client: # install client node_modules
 	@docker-compose run --rm -w /project/client node yarn
-
-.PHONY: remove
-remove: ## shortcut for remove_server and remove_client
-	@$(MAKE) remove_server && remove_client
-
-.PHONY: remove_server
-remove_server: ## remove server node_modules
-	@rm -rf server/node_modules
-
-.PHONY: remove_client
-remove_client: ## remove client node_modules
-	@rm -rf client/node_modules
 
 .PHONY: check-install
 check-install: # shortcut for check-install_server and check-install_client

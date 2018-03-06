@@ -113,18 +113,12 @@ Run just `make` for usage information:
 Usage: make <target>
 
 start → (re)start all services
-stop → stop all services
+stop → stop all containers
 server → attach to server log
 client → attach to client log
 shell → open a shell in node container
 redis → open a redis-cli shell
 analyzer → start bundle analyzer service
-install → shortcut for install_server and install_client
-install_server → install server node modules
-install_client → install client node modules
-remove → shortcut for remove_server and remove_client
-remove_server → remove server node_modules
-remove_client → remove client node_modules
 ```
 
 
