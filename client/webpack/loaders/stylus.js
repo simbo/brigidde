@@ -6,15 +6,18 @@ const { paths } = require('./../paths');
 const stylusLoader = {
   loader: 'stylus-loader',
   options: {
-    ...globals,
+    define: {
+      ...globals,
+      'inline-url': stylus.url({
+        paths: [
+          paths.src('images')
+        ],
+        limit: false
+      })
+    },
     paths: [
       paths.src('styles', 'imports')
-    ],
-    'include css': true,
-    'inline-url': stylus.url({
-      path: paths.src,
-      limit: false
-    })
+    ]
   }
 };
 
