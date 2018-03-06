@@ -30,13 +30,13 @@ services:
 
   server:
     container_name: brigidde_server
+    extends:
+      service: node
     depends_on:
       - couchdb
       - redis
-    image: simbo/node:8-alpine
     volumes:
       - ./client/dist:/public
-      - .:/project
     working_dir: /project/server
     command: yarn watch
     ports:
@@ -46,11 +46,10 @@ services:
 
   client:
     container_name: brigidde_client
+    extends:
+      service: node
     depends_on:
       - server
-    image: simbo/node:8-alpine
-    volumes:
-      - .:/project
     working_dir: /project/client
     ports:
       - 9000:9000
