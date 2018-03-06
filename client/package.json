@@ -67,7 +67,6 @@
     "stylus-loader": "^3.0.2",
     "to-string-loader": "^1.1.5",
     "ts-loader": "^3.5.0",
-    "ts-node": "^4.1.0",
     "typescript": "^2.7.2",
     "webpack": "^3.11.0",
     "webpack-bundle-analyzer": "^2.11.1",
