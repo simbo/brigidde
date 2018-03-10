@@ -1,6 +1,6 @@
 import * as Websocket from 'ws';
 
-import { TokenData } from './../auth/token-data.interface';
+import { TokenData } from './../auth/token/token-data.interface';
 import { WebsocketMessage } from './websocket-message.interface';
 
 export class WebsocketTools {
