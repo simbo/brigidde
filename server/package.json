@@ -13,7 +13,7 @@
     "build": "tsc",
     "start": "ts-node ./src/index.ts",
     "watch": "nodemon --watch \"src/\" -e ts,js,json,pug --exec \"ts-node\" ./src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha --opts .mocha-opts ./src/**/*.spec.ts"
   },
   "dependencies": {
     "@octokit/rest": "^14.0.9",
@@ -43,9 +43,11 @@
     "ws": "^4.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.2",
     "@types/dotenv": "^4.0.2",
     "@types/joi": "^13.0.5",
     "@types/jsonwebtoken": "^7.2.5",
+    "@types/mocha": "^2.2.48",
     "@types/nano": "^6.4.5",
     "@types/node": "8.9.4",
     "@types/node-fetch": "^1.6.7",
@@ -56,7 +58,10 @@
     "@types/uuid": "^3.4.3",
     "@types/winston": "^2.3.8",
     "@types/ws": "^4.0.1",
+    "chai": "^4.1.2",
+    "mocha": "^5.0.4",
     "nodemon": "^1.17.1",
+    "nyc": "^11.4.1",
     "ts-node": "^5.0.1",
     "typescript": "^2.7.2"
   }
