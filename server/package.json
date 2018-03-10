@@ -32,6 +32,7 @@
     "node-wit": "^4.3.0",
     "passport": "^0.4.0",
     "pug": "^2.0.1",
+    "random-int": "^1.0.0",
     "redis": "^2.8.0",
     "rivescript": "^1.19.0",
     "sort-on": "^3.0.0",

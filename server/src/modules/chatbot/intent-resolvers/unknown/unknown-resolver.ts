@@ -1,4 +1,5 @@
-import { randomInt } from './../../../shared/random-int';
+import * as randomInt from 'random-int';
+
 import { IntentResolverFunction } from './../intent-resolver-function.interface';
 import { messages } from './messages';
 

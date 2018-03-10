@@ -1,6 +1,6 @@
 import * as uuid from 'uuid/v4';
+import * as randomInt from 'random-int';
 
-import { randomInt } from './../shared/random-int';
 import { WebsocketMessage } from './../websocket/websocket-message.interface';
 import { chatbotRoutes } from './chatbot-routes';
 import { chatbot } from './chatbot';
