@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { couchDocumentSchema } from '../database/couch/couch-document-schema';
+import { couchDocumentSchema } from './../database/couch/couch-document-schema';
 
 export const userDocumentSchema = couchDocumentSchema
   .keys({

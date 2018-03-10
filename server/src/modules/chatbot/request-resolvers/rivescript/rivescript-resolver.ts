@@ -3,7 +3,7 @@ import * as RiveScript from 'rivescript/lib/rivescript';
 
 import { Intent } from './../../intent-resolvers/intent.interface';
 import { RequestResolverFunction } from './../request-resolver-function.interface';
-import { RequestResolverResult } from '../request-resolver-result.interface';
+import { RequestResolverResult } from './../request-resolver-result.interface';
 
 const rivescriptErrorKeys = [
   'replyNotMatched',

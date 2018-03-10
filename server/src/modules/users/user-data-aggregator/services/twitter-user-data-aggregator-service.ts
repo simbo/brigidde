@@ -1,7 +1,7 @@
 import * as TwitterApi from 'twitter';
 
 import { UserDocument } from './../../user-document.interface';
-import { UserDataAggregatorService } from '../user-data-aggregator-service.interface';
+import { UserDataAggregatorService } from './../user-data-aggregator-service.interface';
 
 export class TwitterUserDataAggregatorService implements UserDataAggregatorService {
 
