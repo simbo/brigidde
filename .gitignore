@@ -1,5 +1,7 @@
 node_modules
 *.log
+
 /.env
-/.make-yarn-state*
+/.make-yarn-state_*
+
 /client/dist
