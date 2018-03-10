@@ -56,6 +56,9 @@ brigidde
   - [x] chatbot service
       - [x] [rivescript](https://www.rivescript.com/) integration 
       - [x] [wit.ai](https://wit.ai/) integration
+  - [x] test environment for unit tests and functional tests using [mocha](https://mochajs.org/)
+        and [nyc](https://github.com/istanbuljs/nyc)
+      - [ ] 100% coverage
   - [ ] interactive debugging console using [tv](https://github.com/hapijs/tv)
   - [ ] generated api documentation using [lout](https://github.com/hapijs/lout)
   - [ ] handle uncaught exceptions and cleanup afterwards using
