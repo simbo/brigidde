@@ -140,6 +140,4 @@ analyzer → start bundle analyzer service
     [localhost:5984/_utils](http://localhost:5984/_utils/)
 
   - Webpack bundle analyzer  
-    [localhost:9001](http://localhost:9001)  
-    (can be enabled in `./webpack/plugins.js` and started using
-    `docker-compose run --rm -p 9001:9001 client yarn build`)
+    [localhost:9001](http://localhost:9001)
