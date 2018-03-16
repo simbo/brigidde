@@ -9,7 +9,7 @@ export class User {
 
   constructor(doc: UserDocument) {
     if (!doc._id) doc._id = uuid();
-    if (!doc.docType) doc.docType = 'user';
+    doc.docType = 'user';
     const docValidation = userDocumentSchema.validate(doc);
     if (docValidation.error) throw docValidation.error;
     this.doc = doc;
