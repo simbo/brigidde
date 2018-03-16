@@ -1,4 +1,4 @@
-const NODE_ENV = ((env) => {
+const NODE_ENV = (env => {
   switch (env) {
     case 'prod':
     case 'production':
@@ -6,7 +6,7 @@ const NODE_ENV = ((env) => {
     default:
       return 'development';
   }
-})(process.env.NODE_ENV)
+})(process.env.NODE_ENV);
 
 const IS_PRODUCTION = NODE_ENV === 'production';
 

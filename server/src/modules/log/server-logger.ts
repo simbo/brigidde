@@ -7,17 +7,15 @@ import { getTransport } from './transports';
 winston.addColors(loglevelColors);
 
 export const serverLoglevels = {
-  error:    0,
-  info:     1,
+  error: 0,
+  info: 1,
   response: 2,
-  request:  3,
-  ops:      4
+  request: 3,
+  ops: 4
 };
 
 const logger = new winston.Logger({
-
   filters: [
-
     (level, msg, meta) => {
       // remove internal timestamp (use winston timestamps instead)
       msg = msg.replace(/^\d+\/\d+\.\d+,\s/, '');
@@ -27,14 +25,9 @@ const logger = new winston.Logger({
       msg = stripAnsi(msg).trim();
       return msg;
     }
-
   ],
 
-  transports: [
-    getTransport('server', 'console'),
-    getTransport('server', 'file')
-  ]
-
+  transports: [getTransport('server', 'console'), getTransport('server', 'file')]
 });
 
 logger.setLevels(serverLoglevels);

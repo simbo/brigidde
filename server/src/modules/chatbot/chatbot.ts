@@ -4,7 +4,6 @@ import { Intent } from './intent-resolvers/intent.interface';
 import { intentResolvers } from './intent-resolvers/index';
 
 class Chatbot {
-
   constructor() {}
 
   public async message(request: string): Promise<string> {
@@ -29,7 +28,6 @@ class Chatbot {
     }
     return intentResolvers[intent.type](intent);
   }
-
 }
 
 export const chatbot = new Chatbot();

@@ -6,25 +6,22 @@ import { TerminalMessage } from './../terminal-message/terminal-message';
 import { TerminalMessageSource } from './../terminal-message/terminal-message-source.enum';
 import { TerminalMessageType } from './../terminal-message/terminal-message-type.enum';
 export class TerminalInputResolver {
-
   private readonly _result = new Subject<TerminalMessage>();
   private readonly queueProcessor: QueueProcessor<string, TerminalMessage>;
 
   constructor() {
-    this.queueProcessor = new QueueProcessor<string, TerminalMessage>(
-      async (body) => {
-        if (body === '') return null;
-        const from = TerminalMessageSource.User;
-        const type = await this.resolveMessageType(body);
-        const message = new TerminalMessage({ from, type, body });
-        return message;
-      }
-    );
-    this.queueProcessor.output.subscribe((result) => {
+    this.queueProcessor = new QueueProcessor<string, TerminalMessage>(async body => {
+      if (body === '') return null;
+      const from = TerminalMessageSource.User;
+      const type = await this.resolveMessageType(body);
+      const message = new TerminalMessage({ from, type, body });
+      return message;
+    });
+    this.queueProcessor.output.subscribe(result => {
       if (!result) return;
       this._result.next(result);
     });
-    this.queueProcessor.error.subscribe((err) => {
+    this.queueProcessor.error.subscribe(err => {
       console.error(err);
     });
   }
@@ -43,5 +40,4 @@ export class TerminalInputResolver {
     }
     return TerminalMessageType.Message;
   }
-
 }

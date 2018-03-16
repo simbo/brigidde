@@ -5,7 +5,7 @@ export function escapeHtml(text: string): string {
     '<': '&lt;',
     '>': '&gt;',
     '"': '&quot;',
-    '\'': '&#039;'
+    "'": '&#039;'
   };
-  return text.replace(/[&<>"']/g, (match) => matchMap[match]);
+  return text.replace(/[&<>"']/g, match => matchMap[match]);
 }

@@ -11,11 +11,9 @@ const timestampFormat = 'YYYY-MM-DD hh:mm:ss.SSS';
 const timestamp = () => moment(new Date()).format(timestampFormat);
 
 export const getTransport = (logType, transportType) => {
-
   const options = logSettings.transports[logType];
 
   return {
-
     console: new winston.transports.Console({
       level: options.console.level,
       prettyPrint: true,
@@ -35,7 +33,5 @@ export const getTransport = (logType, transportType) => {
       datePattern: '.yyyy-MM-dd.log',
       filename: join(logSettings.path, logType)
     })
-
   }[transportType];
-
 };

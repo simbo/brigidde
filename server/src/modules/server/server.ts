@@ -14,7 +14,6 @@ import { routes } from './routes';
 import { onPreResponse } from './server-event-handlers';
 
 export async function startServer(): Promise<Hapi.Server> {
-
   const server = new Hapi.Server({
     host: process.env.APP_HTTP_HOST,
     port: parseInt(process.env.APP_HTTP_PORT, 10)
@@ -41,5 +40,4 @@ export async function startServer(): Promise<Hapi.Server> {
   await server.start();
 
   return server;
-
 }

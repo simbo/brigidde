@@ -8,15 +8,12 @@ import { ApplicationRef, enableProdMode } from '@angular/core';
 export let decorateModuleRef: <T>(value: T) => T;
 
 if (IS_PRODUCTION) {
-
   enableProdMode();
   decorateModuleRef = (modRef: any) => {
     disableDebugTools();
     return modRef;
   };
-
 } else {
-
   decorateModuleRef = (modRef: any) => {
     const appRef = modRef.injector.get(ApplicationRef);
     const cmpRef = appRef.components[0];
@@ -26,5 +23,4 @@ if (IS_PRODUCTION) {
     (window as any).ng.coreTokens = _ng.coreTokens;
     return modRef;
   };
-
 }

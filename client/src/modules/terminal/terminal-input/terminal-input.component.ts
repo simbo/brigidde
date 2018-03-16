@@ -1,4 +1,14 @@
-import { Component, Input, Output, EventEmitter, ElementRef, AfterViewInit, AfterViewChecked, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  AfterViewInit,
+  AfterViewChecked,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import * as autosize from 'autosize';
 import * as keycode from 'keycode';
@@ -12,8 +22,8 @@ import { TerminalMessage } from './../terminal-message/terminal-message';
   templateUrl: './terminal-input.component.pug',
   styleUrls: ['./terminal-input.component.styl']
 })
-export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
-
+export class TerminalInputComponent
+  implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
   @Input() public prompt: string;
   @Output() public message = new EventEmitter<string>();
 
@@ -39,7 +49,7 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
     this.historyStateCheck();
   }
 
-  public get classNames(): {[name: string]: boolean} {
+  public get classNames(): { [name: string]: boolean } {
     return {
       'is-command': this.value && this.value.substr(0, 1) === '/'
     };
@@ -48,15 +58,22 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
   public ngOnInit(): void {
     this.subscriptions.push(
       this.msgBus.channel('request:focus:terminal-input').subscribe(() => this.focus()),
-      this.terminalService.inputHistory.subscribe((history) => this.onHistoryUpdate(history))
+      this.terminalService.inputHistory.subscribe(history =>
+        this.onHistoryUpdate(history)
+      )
     );
   }
 
   public ngAfterViewInit(): void {
-    this.promptElement = this.elementRef.nativeElement.querySelector('.terminal-input__prompt');
-    this.textareaElement = this.elementRef.nativeElement.querySelector('.terminal-input__textarea');
-    this.textareaElement.addEventListener('autosize:resized',
-      () => this.msgBus.push('request:scroll-down:terminal-screen'));
+    this.promptElement = this.elementRef.nativeElement.querySelector(
+      '.terminal-input__prompt'
+    );
+    this.textareaElement = this.elementRef.nativeElement.querySelector(
+      '.terminal-input__textarea'
+    );
+    this.textareaElement.addEventListener('autosize:resized', () =>
+      this.msgBus.push('request:scroll-down:terminal-screen')
+    );
     autosize(this.textareaElement);
     this.focus();
   }
@@ -67,7 +84,7 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
   }
 
   public ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   public onClick(event: MouseEvent) {
@@ -77,7 +94,7 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
   public onKeyDown(event: KeyboardEvent): void {
     const modKey = event.shiftKey || event.ctrlKey || event.metaKey || event.altKey;
     const key = keycode(event.keyCode);
-    switch(key) {
+    switch (key) {
       case 'enter':
         if (modKey) return;
         event.preventDefault();
@@ -114,7 +131,7 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
   private onHistoryUpdate(messages: TerminalMessage[]) {
     let previousMessage: string = null;
     this.history = messages
-      .map((message) => message.body)
+      .map(message => message.body)
       // remove adjacent duplicates
       .reduce((msgs, message) => {
         if (!previousMessage || previousMessage !== message) {
@@ -123,7 +140,7 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
         previousMessage = message;
         return msgs;
       }, [])
-      .reverse()
+      .reverse();
   }
 
   private historyBack(): void {
@@ -154,5 +171,4 @@ export class TerminalInputComponent implements OnInit, AfterViewInit, AfterViewC
       this.history.shift();
     }
   }
-
 }

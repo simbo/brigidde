@@ -12,7 +12,8 @@ const basePaths = {
 
 const paths = {
   ...Object.keys(basePaths).reduce((pathFunctions, basePathName) => {
-    pathFunctions[basePathName] = (...trailers) => Path.join(basePaths[basePathName], ...trailers);
+    pathFunctions[basePathName] = (...trailers) =>
+      Path.join(basePaths[basePathName], ...trailers);
     return pathFunctions;
   }, {})
 };

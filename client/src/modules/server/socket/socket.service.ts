@@ -12,7 +12,6 @@ import { SocketServiceEventType } from './socket-service-event-type.enum';
 
 @Injectable()
 export class SocketService {
-
   private readonly eventSubject: Subject<SocketServiceEvent>;
   private readonly connectionStateSubject: BehaviorSubject<SocketServiceConnectionState>;
 
@@ -23,9 +22,7 @@ export class SocketService {
   private autoReconnectTimeout: number = 0;
   private autoReconnectAttempts: number = 0;
 
-  constructor(
-    private tokenService: TokenService
-  ) {
+  constructor(private tokenService: TokenService) {
     this.eventSubject = new Subject<SocketServiceEvent>();
     this.connectionStateSubject = new BehaviorSubject<SocketServiceConnectionState>(null);
     this.messageQueue = [];
@@ -37,51 +34,50 @@ export class SocketService {
 
   public get onConnect(): Observable<void> {
     return this.connectionStateSubject
-      .filter((state) => state === SocketServiceConnectionState.Connected)
-      .map((state) => {
+      .filter(state => state === SocketServiceConnectionState.Connected)
+      .map(state => {
         return;
       });
   }
 
   public get onDisconnect(): Observable<void> {
     return this.connectionStateSubject
-      .filter((state) => state === SocketServiceConnectionState.Disconnected)
-      .map((state) => {
+      .filter(state => state === SocketServiceConnectionState.Disconnected)
+      .map(state => {
         return;
       });
   }
 
   public get onError(): Observable<Event> {
     return this.eventSubject
-      .filter((event) => event.type === SocketServiceEventType.Error)
-      .map((event) => event.data);
+      .filter(event => event.type === SocketServiceEventType.Error)
+      .map(event => event.data);
   }
 
   public get onMessageReceived(): Observable<SocketServiceMessage> {
     return this.eventSubject
-      .filter((event) => event.type === SocketServiceEventType.MessageReceived)
-      .map((event) => event.data);
+      .filter(event => event.type === SocketServiceEventType.MessageReceived)
+      .map(event => event.data);
   }
 
   public get onMessageSent(): Observable<SocketServiceMessage> {
     return this.eventSubject
-      .filter((event) => event.type === SocketServiceEventType.MessageSent)
-      .map((event) => event.data);
+      .filter(event => event.type === SocketServiceEventType.MessageSent)
+      .map(event => event.data);
   }
 
   public get onReconnectFailed(): Observable<number> {
     return this.eventSubject
-      .filter((event) => event.type === SocketServiceEventType.ReconnectFailed)
-      .map((event) => event.data);
+      .filter(event => event.type === SocketServiceEventType.ReconnectFailed)
+      .map(event => event.data);
   }
 
   public connect(): void {
     if (this.ready) return;
-    this.tokenService.get()
-      .subscribe((token) => {
-        this.authToken = token;
-        this.initSocket();
-      });
+    this.tokenService.get().subscribe(token => {
+      this.authToken = token;
+      this.initSocket();
+    });
   }
 
   public disconnect(): void {
@@ -102,9 +98,10 @@ export class SocketService {
   }
 
   private get ready(): boolean {
-    return this.socket && (
-      this.socket.readyState === SocketServiceConnectionState.Connected ||
-      this.socket.readyState === SocketServiceConnectionState.Connecting
+    return (
+      this.socket &&
+      (this.socket.readyState === SocketServiceConnectionState.Connected ||
+        this.socket.readyState === SocketServiceConnectionState.Connecting)
     );
   }
 
@@ -122,10 +119,10 @@ export class SocketService {
     let socketUrl = getServerBaseUrl('ws');
     socketUrl.searchParams.set('token', this.authToken);
     this.socket = new WebSocket(socketUrl.toString());
-    this.socket.onerror = (event) => this.onSocketError(event);
-    this.socket.onopen = (event) => this.onSocketOpen(event);
-    this.socket.onclose = (event) => this.onSocketClose(event);
-    this.socket.onmessage = (event) => this.onSocketMessage(event);
+    this.socket.onerror = event => this.onSocketError(event);
+    this.socket.onopen = event => this.onSocketOpen(event);
+    this.socket.onclose = event => this.onSocketClose(event);
+    this.socket.onmessage = event => this.onSocketMessage(event);
   }
 
   private onSocketOpen(event: Event) {
@@ -164,7 +161,7 @@ export class SocketService {
   private processMessageQueue(): void {
     const queue = [...this.messageQueue];
     this.messageQueue = [];
-    queue.forEach((message) => this.send(message));
+    queue.forEach(message => this.send(message));
   }
 
   private startAutoReconnect(): void {
@@ -172,7 +169,11 @@ export class SocketService {
       window.clearInterval(this.autoReconnectTimeout);
     }
     this.autoReconnectTimeout = window.setTimeout(() => {
-      if (this.socket && this.socket.readyState === SocketServiceConnectionState.Connected) return;
+      if (
+        this.socket &&
+        this.socket.readyState === SocketServiceConnectionState.Connected
+      )
+        return;
       this.autoReconnectAttempts++;
       this.connect();
     }, SocketService.getReconnectRetryTimeout(this.autoReconnectAttempts));
@@ -181,5 +182,4 @@ export class SocketService {
   public static getReconnectRetryTimeout(failedAttempts: number): number {
     return Math.min(30000, 1000 * Math.pow(2, failedAttempts));
   }
-
 }

@@ -21,8 +21,6 @@ const routes: Routes = [
       enableTracing: false // only for debugging
     })
   ],
-  exports: [
-    RouterModule
-  ]
+  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

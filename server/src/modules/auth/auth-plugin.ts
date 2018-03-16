@@ -1,12 +1,13 @@
 import { authRoutes } from './auth-routes';
-import { tokenAuthScheme, tokenIgnoreExpirationAuthScheme } from './token/token-auth-scheme';
+import {
+  tokenAuthScheme,
+  tokenIgnoreExpirationAuthScheme
+} from './token/token-auth-scheme';
 
 export const authPlugin = {
-
   name: 'auth',
 
   async register(server, options) {
-
     server.dependency(['bell']);
 
     const defaultOAuthStrategyOptions = {
@@ -35,7 +36,5 @@ export const authPlugin = {
     server.auth.strategy('jwt-ignore-expiration', 'jwt-ignore-expiration');
 
     server.route(authRoutes);
-
   }
-
 };

@@ -5,11 +5,9 @@ import { logSettings } from './log-settings';
 import { serverLogger } from './server-logger';
 
 export const reporterPlugin = {
-
   name: 'reporter',
 
   async register(server, options) {
-
     const goodWinston = new GoodWinston({
       winston: serverLogger,
       level: {
@@ -32,7 +30,5 @@ export const reporterPlugin = {
         }
       }
     });
-
   }
-
 };

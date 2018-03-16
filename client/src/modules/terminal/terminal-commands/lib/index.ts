@@ -12,11 +12,13 @@ export const commands: TerminalCommandHandler[] = [
   nowCommand
 ];
 
-export const commandsByName: {[name: string]: TerminalCommandHandler} = commands
-  .reduce((cmds, cmd) => {
+export const commandsByName: { [name: string]: TerminalCommandHandler } = commands.reduce(
+  (cmds, cmd) => {
     cmds[cmd.name] = cmd;
     if (cmd.aliases) {
-      cmd.aliases.forEach((alias) => cmds[alias] = cmd);
+      cmd.aliases.forEach(alias => (cmds[alias] = cmd));
     }
     return cmds;
-  }, {});
+  },
+  {}
+);

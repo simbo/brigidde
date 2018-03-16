@@ -12,13 +12,12 @@ import { TerminalMessageSource } from './terminal-message/terminal-message-sourc
 
 @Injectable()
 export class TerminalService {
-
   public readonly inputResolver = new TerminalInputResolver();
-  public readonly _runners = new BehaviorSubject(new Set<TerminalCommandRunner>())
+  public readonly _runners = new BehaviorSubject(new Set<TerminalCommandRunner>());
   private readonly _messages = new BehaviorSubject(new Map<string, TerminalMessage>());
 
   constructor() {
-    this.inputResolver.result.subscribe((input) => this.handleInput(input));
+    this.inputResolver.result.subscribe(input => this.handleInput(input));
   }
 
   public get messages(): Observable<Map<string, TerminalMessage>> {
@@ -26,32 +25,37 @@ export class TerminalService {
   }
 
   public get messageLog(): Observable<TerminalMessage[]> {
-    return this._messages
-      .map((messages) => Array.from(messages.values()))
-      // sort messages by parent relation and timestamp
-      .map((messages) => messages.sort((a, b) => {
-        if (a.parent && b.parent) {
-          if (a.parent === b.parent) return a.date.getTime() - b.date.getTime();
-          return a.parent.date.getTime() - b.parent.date.getTime();
-        }
-        if (a.parent) {
-          if (a.parent.id === b.id) return 1;
-          return a.parent.date.getTime() - b.date.getTime();
-        }
-        if (b.parent) {
-          if (b.parent.id === a.id) return -1;
-          return a.date.getTime() - b.parent.date.getTime();
-        }
-        return a.date.getTime() - b.date.getTime();
-      }));
+    return (
+      this._messages
+        .map(messages => Array.from(messages.values()))
+        // sort messages by parent relation and timestamp
+        .map(messages =>
+          messages.sort((a, b) => {
+            if (a.parent && b.parent) {
+              if (a.parent === b.parent) return a.date.getTime() - b.date.getTime();
+              return a.parent.date.getTime() - b.parent.date.getTime();
+            }
+            if (a.parent) {
+              if (a.parent.id === b.id) return 1;
+              return a.parent.date.getTime() - b.date.getTime();
+            }
+            if (b.parent) {
+              if (b.parent.id === a.id) return -1;
+              return a.date.getTime() - b.parent.date.getTime();
+            }
+            return a.date.getTime() - b.date.getTime();
+          })
+        )
+    );
   }
 
   public get inputHistory(): Observable<TerminalMessage[]> {
     return this._messages
-      .map((messages) => Array.from(messages.values()))
-      .map((messages) => messages
-        .filter((message) => message.from === TerminalMessageSource.User)
-        .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .map(messages => Array.from(messages.values()))
+      .map(messages =>
+        messages
+          .filter(message => message.from === TerminalMessageSource.User)
+          .sort((a, b) => a.date.getTime() - b.date.getTime())
       );
   }
 
@@ -61,9 +65,9 @@ export class TerminalService {
 
   public get inputBlocked(): Observable<boolean> {
     return this._runners
-      .map((runners) => Array.from(runners.values()))
-      .map((runners) => runners.filter((runner) => runner.blocking))
-      .map((blockingRunners) => blockingRunners.length > 0)
+      .map(runners => Array.from(runners.values()))
+      .map(runners => runners.filter(runner => runner.blocking))
+      .map(blockingRunners => blockingRunners.length > 0);
   }
 
   private appendToLog(message: TerminalMessage): void {
@@ -75,7 +79,7 @@ export class TerminalService {
   private handleInput(message: TerminalMessage): void {
     if (!message) return;
     this.appendToLog(message);
-    switch(message.type) {
+    switch (message.type) {
       case TerminalMessageType.Command:
         this.runCommand(message);
         break;
@@ -87,29 +91,33 @@ export class TerminalService {
 
   private runCommand(commandMessage: TerminalMessage): void {
     const runner = new TerminalCommandRunner(commandMessage);
-    runner.output
-      .subscribe((output) => {
-        const outputMessage = output instanceof TerminalMessage ?
-          output : new TerminalMessage(output as string);
-        outputMessage.setParent(commandMessage);
-        this.appendToLog(outputMessage);
-      });
+    runner.output.subscribe(output => {
+      const outputMessage =
+        output instanceof TerminalMessage
+          ? output
+          : new TerminalMessage(output as string);
+      outputMessage.setParent(commandMessage);
+      this.appendToLog(outputMessage);
+    });
     runner.status
-      .map((status) => {
+      .map(status => {
         switch (status) {
-          case TerminalCommandRunnerStatus.Blocking: return 'add';
-          case TerminalCommandRunnerStatus.NonBlocking: return null;
-          case TerminalCommandRunnerStatus.Stopped: return 'delete';
-          default: return false;
-        };
+          case TerminalCommandRunnerStatus.Blocking:
+            return 'add';
+          case TerminalCommandRunnerStatus.NonBlocking:
+            return null;
+          case TerminalCommandRunnerStatus.Stopped:
+            return 'delete';
+          default:
+            return false;
+        }
       })
-      .filter((method) => method !== false)
-      .subscribe((method) => {
+      .filter(method => method !== false)
+      .subscribe(method => {
         const runners = this._runners.getValue();
         if (method) runners[method](runner);
         this._runners.next(runners);
       });
     runner.start();
   }
-
 }

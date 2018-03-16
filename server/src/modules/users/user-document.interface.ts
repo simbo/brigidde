@@ -8,11 +8,11 @@ export interface UserDocument extends CouchDocument {
     github?: {
       id: string;
       token: string;
-    },
+    };
     twitter?: {
       id: string;
       token: string;
       secret: string;
-    }
+    };
   };
 }

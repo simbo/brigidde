@@ -4,9 +4,6 @@ import { SocketService } from './socket/socket.service';
 import { TokenService } from './token/token.service';
 
 @NgModule({
-  providers: [
-    SocketService,
-    TokenService
-  ]
+  providers: [SocketService, TokenService]
 })
 export class ServerModule {}

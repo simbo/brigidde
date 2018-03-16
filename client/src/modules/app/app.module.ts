@@ -11,22 +11,9 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpModule,
-    ServerModule,
-    TerminalModule,
-    AppRoutingModule
-  ],
-  providers: [
-    MessageBusService
-  ],
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+  imports: [BrowserModule, HttpModule, ServerModule, TerminalModule, AppRoutingModule],
+  providers: [MessageBusService],
+  declarations: [AppComponent, PageNotFoundComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -8,6 +8,6 @@ export const serverConnectionOptions = {
   ssl
 };
 
-export function getServerBaseUrl(protocol: 'http' | 'ws' = 'http'): URL {
-  return new URL(`${protocol}${ssl?'s':''}://${hostname}:${port}`);
+export function getServerBaseUrl(protocol: 'http' | 'ws' = 'http'): URL {
+  return new URL(`${protocol}${ssl ? 's' : ''}://${hostname}:${port}`);
 }

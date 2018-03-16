@@ -12,10 +12,13 @@ const rivescriptErrorKeys = [
   'deepRecursion'
 ];
 
-const rivescriptErrors = rivescriptErrorKeys.reduce<{[key: string]: string}>((errors, errorKey) => {
-  errors[errorKey] = `REPLY ERROR: ${errorKey}`;
-  return errors;
-}, {});
+const rivescriptErrors = rivescriptErrorKeys.reduce<{ [key: string]: string }>(
+  (errors, errorKey) => {
+    errors[errorKey] = `REPLY ERROR: ${errorKey}`;
+    return errors;
+  },
+  {}
+);
 
 const rivescript = rivescriptFactory(join(__dirname, 'brain'));
 
@@ -23,13 +26,15 @@ export const rivescriptResolve: RequestResolverFunction = async (request, contex
   const rs = await rivescript;
   const reply = await rs.replyAsync(null, request);
   const error = isErrorReply(reply);
-  const intent = (error) ? null : {
-    type: 'rivescript',
-    confidence: 1,
-    params: {
-      reply
-    }
-  };
+  const intent = error
+    ? null
+    : {
+        type: 'rivescript',
+        confidence: 1,
+        params: {
+          reply
+        }
+      };
   return {
     intent,
     resolver: 'rivescript',
@@ -38,10 +43,10 @@ export const rivescriptResolve: RequestResolverFunction = async (request, contex
       reply
     }
   };
-}
+};
 
 function isErrorReply(reply: string): string {
-  const errorMatches = rivescriptErrorKeys.find((errorKey) => {
+  const errorMatches = rivescriptErrorKeys.find(errorKey => {
     return rivescriptErrors[errorKey] === reply;
   });
   return errorMatches ? errorMatches : null;

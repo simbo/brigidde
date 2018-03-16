@@ -14,7 +14,6 @@ if (process.env.APP_COUCHDB_USER) {
 }
 
 export class CouchDb {
-
   private readonly server: nano.ServerScope;
   private db: nano.DocumentScope<CouchDocument>;
 
@@ -66,27 +65,29 @@ export class CouchDb {
     params: nano.DocumentViewParams = {}
   ): Promise<CouchDocument[]> {
     return new Promise<CouchDocument[]>((resolve, reject) => {
-      this.db.view(designName, viewName, {
-        ...params,
-        include_docs: true
-      }, (err, body) => {
-        if (err) {
-          if (err.statusCode === 404) return resolve([]);
-          return reject(err);
+      this.db.view(
+        designName,
+        viewName,
+        {
+          ...params,
+          include_docs: true
+        },
+        (err, body) => {
+          if (err) {
+            if (err.statusCode === 404) return resolve([]);
+            return reject(err);
+          }
+          const docs = body.rows.map(row => row['doc'] as CouchDocument);
+          resolve(docs);
         }
-        const docs = body.rows.map((row) => row['doc'] as CouchDocument);
-        resolve(docs);
-      });
+      );
     });
   }
 
-  public async delete(
-    docId: string,
-    revId: string = null
-  ): Promise<void> {
+  public async delete(docId: string, revId: string = null): Promise<void> {
     if (!revId) revId = await this.getLatestRevId(docId);
     return new Promise<void>((resolve, reject) => {
-      this.db.destroy(docId, revId, (err) => {
+      this.db.destroy(docId, revId, err => {
         if (err) return reject(err);
         resolve();
       });
@@ -117,8 +118,8 @@ export class CouchDb {
   }
 
   private async updateDesigns(): Promise<void> {
-    await Promise.all(this.designs.map(
-      async (design): Promise<void> => {
+    await Promise.all(
+      this.designs.map(async (design): Promise<void> => {
         let newDesign: CouchDesignDocument;
         const oldDesign: CouchDesignDocument = await this.get(design._id);
         if (!oldDesign) {
@@ -134,14 +135,13 @@ export class CouchDb {
           if (designString !== oldDesignString) {
             newDesign = design;
             newDesign._rev = rev;
-          };
+          }
         }
         if (newDesign) {
           await this.insert(newDesign, false);
           logger.info(`inserted couchdb design "${this.dbName}/${newDesign._id}"`);
         }
-      }
-    ));
+      })
+    );
   }
-
 }

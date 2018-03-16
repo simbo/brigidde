@@ -6,7 +6,6 @@ import { MessageBusMessage } from './message-bus-message.interface';
 
 @Injectable()
 export class MessageBusService {
-
   public readonly bus: Subject<MessageBusMessage>;
 
   constructor() {
@@ -14,15 +13,13 @@ export class MessageBusService {
   }
 
   public push(channel: string, data?: any): void {
-    this.bus
-      .next({channel, data});
+    this.bus.next({ channel, data });
   }
 
   public channel(channels: string | string[]): Observable<any> {
     if (!Array.isArray(channels)) channels = [channels];
     return this.bus
-      .filter((msg) => channels.indexOf(msg.channel) !== -1)
-      .map((msg) => msg.data);
+      .filter(msg => channels.indexOf(msg.channel) !== -1)
+      .map(msg => msg.data);
   }
-
 }

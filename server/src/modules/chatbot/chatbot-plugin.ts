@@ -6,11 +6,9 @@ import { chatbotRoutes } from './chatbot-routes';
 import { chatbot } from './chatbot';
 
 export const chatbotPlugin = {
-
   name: 'chatbot',
 
   async register(server, options) {
-
     server.route(chatbotRoutes);
 
     server.wss.on('/', 'message', (content, ws) => {
@@ -24,17 +22,20 @@ export const chatbotPlugin = {
         setTimeout(() => cb(), responseDelay);
       };
       ws.send('job:started', jobId);
-      chatbot.message(content)
-        .then((response) => respond(() => {
-          ws.send('job:finished', jobId);
-          ws.send('message', response);
-        }))
-        .catch((error) => respond(() => {
-          ws.send('job:finished', jobId);
-          ws.send('error', `ERROR: ${error.message || error}`);
-        }));
+      chatbot
+        .message(content)
+        .then(response =>
+          respond(() => {
+            ws.send('job:finished', jobId);
+            ws.send('message', response);
+          })
+        )
+        .catch(error =>
+          respond(() => {
+            ws.send('job:finished', jobId);
+            ws.send('error', `ERROR: ${error.message || error}`);
+          })
+        );
     });
-
   }
-
 };

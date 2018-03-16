@@ -1,7 +1,5 @@
 module.exports.default = {
-
   views: {
-
     byId: {
       map: function(doc) {
         if (doc.docType === 'user') {
@@ -33,7 +31,5 @@ module.exports.default = {
         }
       }
     }
-
   }
-
 };

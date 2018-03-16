@@ -6,14 +6,13 @@ import { TerminalMessageSource } from './terminal-message-source.enum';
 import { TerminalMessageType } from './terminal-message-type.enum';
 
 export class TerminalMessage {
-
   public readonly id: string;
   public readonly date: Date;
   public readonly from: TerminalMessageSource;
-  public readonly type: TerminalMessageType
+  public readonly type: TerminalMessageType;
   public readonly prompt: string;
   private _parent: TerminalMessage;
-  private _body: string = ''
+  private _body: string = '';
   private _bodyRaw: string = '';
 
   constructor(body: string | TerminalMessageData) {
@@ -58,9 +57,10 @@ export class TerminalMessage {
   }
 
   private filterBody(body: string): string {
-    return body
-      // reduce leading and trailing whitespace
-      .replace(/(^[\s\r\n]+)|([\s\r\n]+$)/g, ' ');
+    return (
+      body
+        // reduce leading and trailing whitespace
+        .replace(/(^[\s\r\n]+)|([\s\r\n]+$)/g, ' ')
+    );
   }
-
 }

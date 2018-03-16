@@ -9,15 +9,11 @@ const stylusLoader = {
     define: {
       ...globals,
       'inline-url': stylus.url({
-        paths: [
-          paths.src('images')
-        ],
+        paths: [paths.src('images')],
         limit: false
       })
     },
-    paths: [
-      paths.src('styles', 'imports')
-    ]
+    paths: [paths.src('styles', 'imports')]
   }
 };
 

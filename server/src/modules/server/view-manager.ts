@@ -25,7 +25,7 @@ function compile(
   } catch (err) {
     done(err);
   }
-};
+}
 
 function renderFunctionFactory(
   render: Pug.compileTemplate,

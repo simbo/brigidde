@@ -11,7 +11,7 @@ export interface TerminalCommandHandler {
   aliases?: string[];
   run(
     parseArgs: TerminalCommandParseArgs,
-    stdout: Subject<string|TerminalMessage>,
+    stdout: Subject<string | TerminalMessage>,
     unblock: () => void
   ): Promise<void>;
 }

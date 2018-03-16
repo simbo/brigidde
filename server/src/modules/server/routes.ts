@@ -1,5 +1,4 @@
 export const routes = [
-
   // serve empty favicon
   {
     method: 'get',
@@ -19,5 +18,4 @@ export const routes = [
       }
     }
   }
-
 ];

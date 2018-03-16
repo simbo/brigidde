@@ -11,22 +11,19 @@ import { TerminalCommandRunnerStatus } from './terminal-command-runner-status.en
 import { commandsByName } from './lib';
 
 export class TerminalCommandRunner {
-
   private _blocking: boolean = true;
-  private readonly _output = new Subject<string|TerminalMessage>();
+  private readonly _output = new Subject<string | TerminalMessage>();
   private readonly _status = new BehaviorSubject<TerminalCommandRunnerStatus>(
     TerminalCommandRunnerStatus.Created
   );
   private readonly command: TerminalCommand;
 
-  constructor(
-    private readonly message: TerminalMessage
-  ) {
+  constructor(private readonly message: TerminalMessage) {
     this.command = this.parseCommandMessage();
     if (!this.command) this.stop();
   }
 
-  public get output(): Observable<string|TerminalMessage> {
+  public get output(): Observable<string | TerminalMessage> {
     return this._output.asObservable();
   }
 
@@ -39,15 +36,13 @@ export class TerminalCommandRunner {
   }
 
   public start(): void {
-    if (
-      !this.command ||
-      this._status.getValue() !== TerminalCommandRunnerStatus.Created
-    ) return;
+    if (!this.command || this._status.getValue() !== TerminalCommandRunnerStatus.Created)
+      return;
     this._status.next(TerminalCommandRunnerStatus.Blocking);
     this.command.handler
       .run(this.command.parseArgs, this._output, () => this.unblock())
       .then(() => this.stop())
-      .catch((err) => {
+      .catch(err => {
         this.stop();
         console.error(err);
       });
@@ -77,5 +72,4 @@ export class TerminalCommandRunner {
     };
     return { handler, parseArgs };
   }
-
 }

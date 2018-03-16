@@ -23,4 +23,6 @@ function tokenAuthSchemeFactory(verifyOptions: VerifyOptions) {
 
 export const tokenAuthScheme = tokenAuthSchemeFactory({});
 
-export const tokenIgnoreExpirationAuthScheme = tokenAuthSchemeFactory({ ignoreExpiration: true });
+export const tokenIgnoreExpirationAuthScheme = tokenAuthSchemeFactory({
+  ignoreExpiration: true
+});

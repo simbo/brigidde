@@ -2,7 +2,6 @@ import * as Joi from 'joi';
 import { chatbot } from './chatbot';
 
 export const chatbotRoutes = [
-
   {
     method: 'POST',
     path: '/message',
@@ -12,10 +11,11 @@ export const chatbotRoutes = [
     options: {
       validate: {
         payload: {
-          body: Joi.string().min(1).required()
+          body: Joi.string()
+            .min(1)
+            .required()
         }
-      },
+      }
     }
   }
-
 ];

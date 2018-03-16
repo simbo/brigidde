@@ -6,7 +6,6 @@ import { usersRepository } from './../users/users-repository';
 import { UserDataAggregator } from './../users/user-data-aggregator/user-data-aggregator';
 
 export const authRoutes = [
-
   {
     method: 'GET',
     path: '/auth/github',
@@ -69,10 +68,7 @@ export const authRoutes = [
     async handler(req, h) {
       const userId = req.auth.credentials.userId;
       const token = await generateToken(userId);
-      return h.response({})
-        .header('Authorization', `Bearer ${token}`);
+      return h.response({}).header('Authorization', `Bearer ${token}`);
     }
-  },
-
-
+  }
 ];

@@ -35,9 +35,7 @@ const fixtures = {
 };
 
 describe('User', () => {
-
   describe('constructor()', () => {
-
     it('should create a new user with github auth data', () => {
       const doc = clone(fixtures.userDocGithubAuth);
       const user = new User(doc);
@@ -55,15 +53,15 @@ describe('User', () => {
       const user = () => new User(doc);
       expect(user).to.throw();
     });
-
   });
 
   describe('get id()', () => {
-
     it('should return the generated id for a new user', () => {
       const doc = clone(fixtures.userDocGithubAuth);
       const user = new User(doc);
-      expect(user.id).to.be.a('string').with.lengthOf(36);
+      expect(user.id)
+        .to.be.a('string')
+        .with.lengthOf(36);
     });
 
     it('should return the id from the doc data', () => {
@@ -73,31 +71,25 @@ describe('User', () => {
       const user = new User(doc);
       expect(user.id).to.be.equal(id);
     });
-
   });
 
   describe('get name()', () => {
-
     it('should return the username from doc data', () => {
       const doc = clone(fixtures.userDocGithubAuth);
       const user = new User(doc);
       expect(user.username).to.be.equal(fixtures.userDocGithubAuth.username);
     });
-
   });
 
   describe('get email()', () => {
-
     it('should return the email from doc data', () => {
       const doc = clone(fixtures.userDocGithubAuth);
       const user = new User(doc);
       expect(user.email).to.be.equal(fixtures.userDocGithubAuth.email);
     });
-
   });
 
   describe('get auth()', () => {
-
     it('should return auth details object with type and options from doc data for github auth', () => {
       const doc = clone(fixtures.userDocGithubAuth);
       const user = new User(doc);
@@ -115,7 +107,5 @@ describe('User', () => {
         options: fixtures.userDocTwitterAuth.auth.twitter
       });
     });
-
   });
-
 });

@@ -8,19 +8,14 @@ import { TerminalService } from './terminal.service';
   selector: 'terminal',
   templateUrl: './terminal.component.pug',
   styleUrls: ['./terminal.component.styl'],
-  providers: [
-    TerminalService
-  ]
+  providers: [TerminalService]
 })
 export class TerminalComponent implements OnInit, OnDestroy {
-
   public messageLog: TerminalMessage[] = [];
   public subscriptions: Subscription[] = [];
   public inputBlocked: boolean = false;
 
-  constructor(
-    public terminalService: TerminalService
-  ) {}
+  constructor(public terminalService: TerminalService) {}
 
   public onMessageInput(value: string) {
     this.terminalService.inputResolver.commit(value);
@@ -28,22 +23,17 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.push(
+      this.terminalService.messageLog.subscribe(log => {
+        this.messageLog = log;
+      }),
 
-      this.terminalService.messageLog
-        .subscribe((log) => {
-          this.messageLog = log;
-        }),
-
-      this.terminalService.inputBlocked
-        .subscribe((blocked) => {
-          this.inputBlocked = blocked;
-        })
-
+      this.terminalService.inputBlocked.subscribe(blocked => {
+        this.inputBlocked = blocked;
+      })
     );
   }
 
   public ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-
 }

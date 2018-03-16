@@ -15,10 +15,12 @@ const postcssLoader = {
         remove: false
       }),
       cssMqpacker(),
-      IS_PRODUCTION ? cssnano({
-        zindex: false
-      }) : null
-    ].filter((plugin) => plugin !== null)
+      IS_PRODUCTION
+        ? cssnano({
+            zindex: false
+          })
+        : null
+    ].filter(plugin => plugin !== null)
   }
 };
 

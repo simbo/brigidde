@@ -10,5 +10,4 @@ import { decorateModuleRef } from './modules/app/app.environment';
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .then(decorateModuleRef)
-  .catch((err) => console.error(err)); // tslint:disable-line:no-console
-
+  .catch(err => console.error(err)); // tslint:disable-line:no-console

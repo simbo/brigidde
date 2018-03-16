@@ -6,17 +6,13 @@ import { TerminalMessageData } from './../../../terminal-message/terminal-messag
 import { TerminalCommandHandler } from './../../terminal-command-handler.interface';
 
 export const countCommand: TerminalCommandHandler = {
-
   name: 'count',
   usage: 'count [--async] [--per-line] <max> [<interval>]',
   description: 'counts to given number',
 
   async run(parseArgs, output, unblock) {
     const args = parseArgs({
-      boolean: [
-        'async',
-        'per-line'
-      ],
+      boolean: ['async', 'per-line'],
       alias: {
         a: 'async',
         p: 'per-line',
@@ -32,7 +28,7 @@ export const countCommand: TerminalCommandHandler = {
     let value: number = null;
     await new Promise((resolve, reject) => {
       const intervalFn = () => {
-        value = value === null ? 0 : (value + 1);
+        value = value === null ? 0 : value + 1;
         const message = perLine ? new TerminalMessage('') : baseMessage;
         message.setBody(`count: ${value}`);
         output.next(message);
@@ -46,5 +42,4 @@ export const countCommand: TerminalCommandHandler = {
       if (async) unblock();
     });
   }
-
 };

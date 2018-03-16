@@ -5,7 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.pug'
 })
 export class AppComponent {
-
   constructor() {}
-
 }

@@ -11,9 +11,10 @@ import { WebsocketMessageHandler } from './websocket-message-handler.interface';
 import { WebsocketTools } from './websocket-tools';
 
 export class WebsocketServer {
-
   public readonly wss: Websocket.Server;
-  private messageHandlers: {[path: string]: {[type: string]: WebsocketMessageHandler}} = {};
+  private messageHandlers: {
+    [path: string]: { [type: string]: WebsocketMessageHandler };
+  } = {};
 
   constructor(server: Hapi.Server) {
     this.wss = new Websocket.Server({
@@ -40,7 +41,11 @@ export class WebsocketServer {
     delete this.messageHandlers[path][type];
   }
 
-  private onMessage(ws: Websocket, req: HTTP.IncomingMessage, data: Websocket.Data): void {
+  private onMessage(
+    ws: Websocket,
+    req: HTTP.IncomingMessage,
+    data: Websocket.Data
+  ): void {
     const path = URL.parse(req.url).pathname;
     if (!this.messageHandlers.hasOwnProperty(path)) return;
     const message: WebsocketMessage = JSON.parse(data.toString());
@@ -55,11 +60,10 @@ export class WebsocketServer {
     const token = this.extractTokenFromRequest(info.req);
     verifyToken(token)
       .then(() => callback(true))
-      .catch(() => callback(false, 401, 'websocket client authentication failed'))
+      .catch(() => callback(false, 401, 'websocket client authentication failed'));
   }
 
   private extractTokenFromRequest(req: HTTP.IncomingMessage): string {
     return URL.parse(req.url, true).query.token as string;
   }
-
 }

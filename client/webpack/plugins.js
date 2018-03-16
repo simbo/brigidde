@@ -20,7 +20,6 @@ const { NODE_ENV, IS_PRODUCTION, IS_DEVELOPMENT } = require('./env');
 const { paths } = require('./paths');
 
 const plugins = [
-
   // define global constants
   new DefinePlugin({
     ...Object.keys(globals).reduce((data, key) => {
@@ -40,8 +39,7 @@ const plugins = [
   new NamedModulesPlugin(),
 
   // shimmed global-scope libs
-  new ProvidePlugin({
-  }),
+  new ProvidePlugin({}),
 
   // separate chunk for polyfills
   new CommonsChunkPlugin({
@@ -53,7 +51,7 @@ const plugins = [
   new CommonsChunkPlugin({
     name: 'vendor',
     chunks: ['main'],
-    minChunks: (module) => /node_modules/.test(module.resource)
+    minChunks: module => /node_modules/.test(module.resource)
   }),
 
   // extract webpack runtime code to extra chunk
@@ -73,7 +71,7 @@ const plugins = [
 
   // extract global-scoped css
   new ExtractTextPlugin({
-    filename: `styles/[name]${ IS_PRODUCTION? '.[contenthash]' : '' }.css`,
+    filename: `styles/[name]${IS_PRODUCTION ? '.[contenthash]' : ''}.css`,
     allChunks: true
   }),
 
@@ -85,75 +83,75 @@ const plugins = [
   }),
 
   // copy static assets
-  new CopyWebpackPlugin([
-    paths.src('assets', '**', '*'),
-  ].map((glob) => ({
-    from: {
-      glob,
-      dot: false
-    },
-    to: paths.dist(),
-    context: paths.src()
-  })), {
-    ignore: [
-    ]
-  })
-
+  new CopyWebpackPlugin(
+    [paths.src('assets', '**', '*')].map(glob => ({
+      from: {
+        glob,
+        dot: false
+      },
+      to: paths.dist(),
+      context: paths.src()
+    })),
+    {
+      ignore: []
+    }
+  )
 ]
 
-/**
- * Development-only plugins
- */
+  /**
+   * Development-only plugins
+   */
 
-.concat(IS_DEVELOPMENT ? [
+  .concat(
+    IS_DEVELOPMENT
+      ? [
+          // enable hot module replacement
+          new HotModuleReplacementPlugin()
+        ]
+      : []
+  )
 
-  // enable hot module replacement
-  new HotModuleReplacementPlugin()
+  /**
+   * Production-only plugins
+   */
 
-] : [])
+  .concat(
+    IS_PRODUCTION
+      ? [
+          // delete generated files before build
+          new CleanWebpackPlugin([join(resolve(paths.root(), paths.dist()), '**/*')], {
+            root: paths.root(),
+            exclude: []
+          }),
 
+          // generate deterministic hashes for chunks
+          new WebpackMd5Hash(),
 
-/**
- * Production-only plugins
- */
+          // uglify
+          new UglifyJsPlugin({
+            sourceMap: true
+          })
+        ]
+      : []
+  )
 
-.concat(IS_PRODUCTION ? [
+  /**
+   * Bundle Analyzer
+   */
 
-  // delete generated files before build
-  new CleanWebpackPlugin([
-    join(resolve(paths.root(), paths.dist()), '**/*')
-  ], {
-    root: paths.root(),
-    exclude: []
-  }),
-
-  // generate deterministic hashes for chunks
-  new WebpackMd5Hash(),
-
-  // uglify
-  new UglifyJsPlugin({
-    sourceMap: true
-  })
-
-] : [])
-
-
-/**
- * Bundle Analyzer
- */
-
-.concat(IS_PRODUCTION && process.env.BUNDLE_ANALYZER ? [
-
-  // optional bundle analyzer service
-  new BundleAnalyzerPlugin({
-    analyzerMode: 'server',
-    analyzerHost: '0.0.0.0',
-    analyzerPort: 9001,
-    defaultSizes: 'gzip',
-    openAnalyzer: false
-  })
-
-] : []);
-
+  .concat(
+    IS_PRODUCTION && process.env.BUNDLE_ANALYZER
+      ? [
+          // optional bundle analyzer service
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'server',
+            analyzerHost: '0.0.0.0',
+            analyzerPort: 9001,
+            defaultSizes: 'gzip',
+            openAnalyzer: false
+          })
+        ]
+      : []
+  );
 
 module.exports = { plugins };

@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { QueueProcessorError } from './queue-processor-error.interface';
 
 export class QueueProcessor<I, O> {
-
   public readonly input = new Subject<I>();
 
   private readonly _output = new Subject<O>();
@@ -13,17 +12,15 @@ export class QueueProcessor<I, O> {
   private readonly _queued = new BehaviorSubject<Array<I>>([]);
   private readonly _processing = new BehaviorSubject<I>(null);
 
-  constructor(
-    private processFn: (item: I) => Promise<O>
-  ) {
-    this.input.subscribe((item) => {
+  constructor(private processFn: (item: I) => Promise<O>) {
+    this.input.subscribe(item => {
       if (!item) return;
       const items = this._queued.getValue();
       items.push(item);
       this._queued.next(items);
       this.processQueue();
     });
-    this._processing.subscribe((item) => {
+    this._processing.subscribe(item => {
       if (!item) this.processQueue();
     });
   }
@@ -60,7 +57,7 @@ export class QueueProcessor<I, O> {
         this._queued.next(queued);
         this._processing.next(null);
       })
-      .catch((err) => {});
+      .catch(err => {});
   }
 
   private async processItem(): Promise<void> {
@@ -74,5 +71,4 @@ export class QueueProcessor<I, O> {
       this._error.next(err as QueueProcessorError<I>);
     }
   }
-
 }

@@ -8,27 +8,25 @@ import { getServerBaseUrl } from '../connection-options/connection-options';
 
 @Injectable()
 export class TokenService {
-
   private readonly storageKey: string;
 
-  constructor(
-    private http: Http
-  ) {
+  constructor(private http: Http) {
     this.storageKey = 'token';
   }
 
   public get(): Observable<string> {
     const tokenSubject = new Subject<string>();
     if (this.token) {
-      window.setTimeout(() => tokenSubject.next(this.token))
+      window.setTimeout(() => tokenSubject.next(this.token));
     } else {
       const tokenUrl = getServerBaseUrl();
       tokenUrl.pathname = 'token';
-      this.http.get(tokenUrl.toString())
-        .map((response) => response.json())
-        .map((data) => data.token || null)
-        .catch((err) => Observable.of(null))
-        .subscribe((token) => {
+      this.http
+        .get(tokenUrl.toString())
+        .map(response => response.json())
+        .map(data => data.token || null)
+        .catch(err => Observable.of(null))
+        .subscribe(token => {
           this.token = token;
           tokenSubject.next(token);
         });
@@ -51,5 +49,4 @@ export class TokenService {
     }
     localStorage.setItem(this.storageKey, value);
   }
-
 }

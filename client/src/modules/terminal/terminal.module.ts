@@ -10,20 +10,13 @@ import { TerminalInputComponent } from './terminal-input/terminal-input.componen
 import { TerminalStatusBarModule } from './terminal-status-bar/terminal-status-bar.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    TerminalStatusBarModule,
-    TerminalRoutingModule
-  ],
+  imports: [CommonModule, FormsModule, TerminalStatusBarModule, TerminalRoutingModule],
   declarations: [
     TerminalComponent,
     TerminalScreenComponent,
     TerminalInputComponent,
     TerminalMessageComponent
   ],
-  exports: [
-    TerminalComponent
-  ]
+  exports: [TerminalComponent]
 })
 export class TerminalModule {}
