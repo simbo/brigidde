@@ -4,7 +4,7 @@ start: check-install ## (re)start all services
 
 .PHONY: stop
 stop: ## stop all containers
-	@docker-compose down
+	@docker-compose stop client server redis couchdb
 
 .PHONY: server
 server: ## attach to server log
