@@ -2,13 +2,17 @@
   "extension": [
     ".ts"
   ],
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": [
     "**/*.d.ts",
     "**/*.spec.ts",
     "coverage"
   ],
   "reporter": [
-    "html"
+    "lcov",
+    "text-summary"
   ],
   "all": true
 }
