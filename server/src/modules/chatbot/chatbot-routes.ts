@@ -9,6 +9,7 @@ export const chatbotRoutes = [
       return chatbot.message(request.payload.body);
     },
     options: {
+      description: 'responds to given message',
       validate: {
         payload: {
           body: Joi.string()

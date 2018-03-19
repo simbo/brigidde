@@ -10,7 +10,8 @@ export const authRoutes = [
     method: 'GET',
     path: '/auth/github',
     options: {
-      auth: 'github'
+      auth: 'github',
+      description: 'register or login using github'
     },
     async handler(req, h) {
       if (!req.auth.isAuthenticated) {
@@ -36,7 +37,8 @@ export const authRoutes = [
     method: 'GET',
     path: '/auth/twitter',
     options: {
-      auth: 'twitter'
+      auth: 'twitter',
+      description: 'register or login using twitter'
     },
     async handler(req, h) {
       if (req.auth.isAuthenticated) {
@@ -63,7 +65,8 @@ export const authRoutes = [
     method: 'GET',
     path: '/auth/token',
     options: {
-      auth: 'jwt-ignore-expiration'
+      auth: 'jwt-ignore-expiration',
+      description: 'refresh a given token'
     },
     async handler(req, h) {
       const userId = req.auth.credentials.userId;

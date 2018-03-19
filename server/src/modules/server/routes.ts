@@ -5,6 +5,11 @@ export const routes = [
     path: '/favicon.ico',
     async handler(req, h) {
       return h.response().code(200);
+    },
+    options: {
+      plugins: {
+        lout: false
+      }
     }
   },
 
@@ -15,6 +20,11 @@ export const routes = [
     handler: {
       directory: {
         path: process.env.APP_PUBLIC_PATH
+      }
+    },
+    options: {
+      plugins: {
+        lout: false
       }
     }
   }
