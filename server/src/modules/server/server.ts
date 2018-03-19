@@ -10,6 +10,7 @@ import { authPlugin } from './../auth/auth-plugin';
 import { websocketPlugin } from './../websocket/websocket-plugin';
 import { chatbotPlugin } from './../chatbot/chatbot-plugin';
 import { viewManager } from './view-manager';
+import { docsPlugin } from './docs-plugin';
 import { routes } from './routes';
 import { onPreResponse } from './server-event-handlers';
 
@@ -28,7 +29,8 @@ export async function startServer(): Promise<Hapi.Server> {
     Vision,
     authPlugin,
     websocketPlugin,
-    chatbotPlugin
+    chatbotPlugin,
+    docsPlugin
   ]);
 
   server.views(viewManager);
