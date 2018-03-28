@@ -13,6 +13,8 @@ if (process.env.APP_COUCHDB_USER) {
   couchdbUrl.password = process.env.APP_COUCHDB_PASSWORD;
 }
 
+const systemDatabaseNames = ['_users', '_replicator', '_global_changes'];
+
 export class CouchDb {
   private readonly server: nano.ServerScope;
   private db: nano.DocumentScope<CouchDocument>;
@@ -26,7 +28,12 @@ export class CouchDb {
 
   public async init(): Promise<void> {
     if (this.db) return;
-    await this.createDb();
+    await Promise.all(
+      systemDatabaseNames
+        .slice(0)
+        .concat([this.dbName])
+        .map(dbName => this.createDb(dbName))
+    );
     this.db = this.server.use(this.dbName);
     await this.updateDesigns();
   }
@@ -104,14 +111,14 @@ export class CouchDb {
     });
   }
 
-  private async createDb(): Promise<void> {
+  private async createDb(dbName: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.server.db.create(this.dbName, (err, body) => {
+      this.server.db.create(dbName, (err, body) => {
         if (err) {
           if (err.statusCode === 412) return resolve();
           reject(err);
         }
-        logger.info(`created couchdb database "${this.dbName}"`);
+        logger.info(`created couchdb database "${dbName}"`);
         resolve();
       });
     });
