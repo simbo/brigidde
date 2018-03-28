@@ -3,18 +3,23 @@ start: check-install ## (re)start all services
 	@docker-compose up -d --force-recreate client
 
 .PHONY: stop
-stop: ## stop all containers
+stop: ## stop all services
 	@docker-compose stop client server redis couchdb
 
 .PHONY: server
-server: ## attach to server log
+server: ## attach to server container
 	@echo "Attaching to server container…  (press \033[1;37mCTRL-C\033[0m to detach)"
 	@docker attach --detach-keys="ctrl-c" brigidde_server || true
 
 .PHONY: client
-client: ## attach to client log
+client: ## attach to client container
 	@echo "Attaching to client container…  (press \033[1;37mCTRL-C\033[0m to detach)"
 	@docker attach --detach-keys="ctrl-c" brigidde_client || true
+
+.PHONY: couchdb
+couchdb: ## attach to couchdb container
+	@echo "Attaching to couchdb container…  (press \033[1;37mCTRL-C\033[0m to detach)"
+	@docker attach --detach-keys="ctrl-c" brigidde_couchdb || true
 
 .PHONY: shell
 shell: ## open a shell in node container

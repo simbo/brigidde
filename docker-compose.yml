@@ -18,6 +18,8 @@ services:
       COUCHDB_PASSWORD: ${APP_COUCHDB_PASSWORD}
     ports:
       - 5984:5984
+    tty: true
+    stdin_open: false
 
   redis:
     container_name: brigidde_redis
