@@ -11,7 +11,7 @@ const watchOptions = {
 };
 
 const config = {
-  context: paths.root(),
+  // context: paths.root(),
 
   entry: {
     main: paths.src('main.ts'),
@@ -31,7 +31,7 @@ const config = {
     chunkFilename: `scripts/[id]${IS_PRODUCTION ? '.[chunkhash]' : ''}.chunk.js`
   },
 
-  devtool: IS_PRODUCTION ? 'source-map' : 'cheap-module-eval-source-map',
+  // devtool: IS_PRODUCTION ? 'source-map' : 'cheap-module-eval-source-map',
 
   watchOptions,
 
